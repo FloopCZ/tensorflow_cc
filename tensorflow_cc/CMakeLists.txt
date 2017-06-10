@@ -49,12 +49,12 @@ if(TENSORFLOW_SHARED)
   )
   target_include_directories(
     tensorflow_cc INTERFACE
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/bazel-genfiles
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/eigen
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/gemmlowp
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/protobuf-host/include
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/bazel-genfiles"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/eigen"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/gemmlowp"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/protobuf-host/include"
   )
   target_link_libraries(
     tensorflow_cc INTERFACE
@@ -75,14 +75,14 @@ else()
   )
   target_include_directories(
     tensorflow_cc INTERFACE
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/host_obj
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/eigen
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/gemmlowp
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/protobuf-host/include
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto
-    ${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto_text
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/host_obj"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/eigen"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/gemmlowp"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/protobuf-host/include"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto_text"
   )
   target_link_libraries(
     tensorflow_cc INTERFACE

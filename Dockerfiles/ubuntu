@@ -11,8 +11,10 @@ RUN echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8
 RUN curl https://bazel.build/bazel-release.pub.gpg | apt-key add -
 RUN apt-get -y update && apt-get -y install bazel
 
-# clone the repository
-RUN git clone https://github.com/FloopCZ/tensorflow_cc.git
+# copy the contents of this repository to the container
+COPY . tensorflow_cc
+# alternatively, clone the repository
+# RUN git clone https://github.com/FloopCZ/tensorflow_cc.git
 
 # install tensorflow
 RUN mkdir /tensorflow_cc/tensorflow_cc/build

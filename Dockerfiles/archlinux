@@ -1,0 +1,22 @@
+FROM pritunl/archlinux
+
+ARG shared=OFF
+
+RUN pacman -S --noconfirm base-devel cmake gcc5 bazel git unzip \
+                          python python-numpy
+
+# copy the contents of this repository to the container
+COPY . tensorflow_cc
+# alternatively, clone the repository
+# RUN git clone https://github.com/FloopCZ/tensorflow_cc.git
+
+# install tensorflow
+RUN mkdir /tensorflow_cc/tensorflow_cc/build
+WORKDIR /tensorflow_cc/tensorflow_cc/build
+RUN cmake -DTENSORFLOW_SHARED=${shared} ..
+RUN make && make install
+
+# build and run example
+RUN mkdir /tensorflow_cc/example/build
+WORKDIR /tensorflow_cc/example/build
+RUN cmake .. && make && ./example
