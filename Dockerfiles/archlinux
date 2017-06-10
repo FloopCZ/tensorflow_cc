@@ -2,8 +2,11 @@ FROM pritunl/archlinux
 
 ARG shared=OFF
 
-RUN pacman -S --noconfirm base-devel cmake gcc5 bazel git unzip \
+RUN pacman -S --noconfirm base-devel cmake gcc5 bazel git unzip mlocate \
                           python python-numpy
+
+# when building TF with Intel MKL support, `locate` database needs to exist
+RUN updatedb
 
 # copy the contents of this repository to the container
 COPY . tensorflow_cc

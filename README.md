@@ -7,16 +7,18 @@ This repository makes possible the usage of the TensorFlow C++ library from the 
 
 ### Requirements (Ubuntu 16.04+)
 ```
-sudo apt-get install build-essential curl git cmake unzip autoconf autogen libtool \
+sudo apt-get install build-essential curl git cmake unzip autoconf autogen libtool mlocate \
                      python python3-numpy python3-dev python3-pip python3-wheel
+sudo updatedb
 ```
 
 If you require GPU support, please also install [Bazel](https://bazel.build/), NVIDIA CUDA Toolkit, NVIDIA drivers, cuDNN, and `libcupti-dev` package. The tensorflow build script will automatically detect CUDA if it is installed in `/opt/cuda` directory.
 
 ### Requirements (Arch Linux)
 ```
-sudo pacman -S base-devel cmake git unzip \
+sudo pacman -S base-devel cmake git unzip mlocate \
                python python-numpy cuda cudnn nvidia
+sudo updatedb
 ```
 
 For GPU support, also install the following:
