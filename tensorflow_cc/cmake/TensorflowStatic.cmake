@@ -10,6 +10,8 @@ ExternalProject_Add(
   DOWNLOAD_COMMAND ""
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND tensorflow/contrib/makefile/build_all_linux.sh
+            COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/copy_links.sh" .
+            COMMAND ./copy_links.sh .
   BUILD_COMMAND ""
   INSTALL_COMMAND ""
 )

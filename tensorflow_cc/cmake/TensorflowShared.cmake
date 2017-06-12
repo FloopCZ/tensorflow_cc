@@ -11,7 +11,9 @@ ExternalProject_Add(
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND tensorflow/contrib/makefile/compile_linux_protobuf.sh
             COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/build_tensorflow.sh" .
+            COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/copy_links.sh" .
             COMMAND ./build_tensorflow.sh
+            COMMAND ./copy_links.sh .
   BUILD_COMMAND ""
   INSTALL_COMMAND ""
 )
