@@ -30,6 +30,13 @@ if(TENSORFLOW_SHARED)
 endif()
 if(TENSORFLOW_STATIC)
   include(TensorflowStatic)
+  # Add shared lib as dependency to avoid race
+  if(TENSORFLOW_SHARED)
+    add_dependencies(
+      tensorflow_static
+      tensorflow_shared
+    )
+  endif()
 endif()
 
 # ----------------------------------
