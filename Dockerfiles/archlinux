@@ -1,5 +1,6 @@
 FROM pritunl/archlinux
 
+# denotes whether shared or static tensorflow is built
 ARG shared=OFF
 
 RUN pacman -S --noconfirm base-devel cmake gcc5 bazel git unzip mlocate \
@@ -17,7 +18,13 @@ COPY . tensorflow_cc
 # install tensorflow
 RUN mkdir /tensorflow_cc/tensorflow_cc/build
 WORKDIR /tensorflow_cc/tensorflow_cc/build
-RUN cmake -DTENSORFLOW_SHARED=${shared} ..
+# build only shared or only static library
+RUN if [ "${shared}" = "OFF" ]; then \
+        cmake ..; \
+    else \
+        cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..; \
+    fi
+# install
 RUN make && make install
 
 # build and run example

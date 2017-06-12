@@ -77,7 +77,9 @@ int main()
 
 find_package(TensorflowCC REQUIRED)
 add_executable(example example.cpp)
-target_link_libraries(example TensorflowCC)
+target_link_libraries(example TensorflowCC::Static)
+# alternatively, use the following for GPU support
+# target_link_libraries(example TensorflowCC::Shared)
 ```
 
 #### 3) Build and run your program
