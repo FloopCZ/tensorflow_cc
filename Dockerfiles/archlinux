@@ -18,14 +18,18 @@ COPY . tensorflow_cc
 # install tensorflow
 RUN mkdir /tensorflow_cc/tensorflow_cc/build
 WORKDIR /tensorflow_cc/tensorflow_cc/build
-# build only shared or only static library
+# configure only shared or only static library
 RUN if [ "${shared}" = "OFF" ]; then \
         cmake ..; \
     else \
         cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..; \
     fi
+# build
+RUN make
+# cleanup after bazel
+RUN rm -rf ~/.cache
 # install
-RUN make && make install
+RUN make install
 
 # build and run example
 RUN mkdir /tensorflow_cc/example/build
