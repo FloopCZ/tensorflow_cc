@@ -43,7 +43,7 @@ cd tensorflow_cc
 mkdir build && cd build
 cmake ..
 # alternatively, use the following for GPU support
-# cmake -DTENSORFLOW_SHARED=ON ..
+# cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..
 make && sudo make install
 ```
 
