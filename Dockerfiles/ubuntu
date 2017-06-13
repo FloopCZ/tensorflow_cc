@@ -1,5 +1,6 @@
 FROM ubuntu
 
+# denotes whether shared or static tensorflow is built
 ARG shared=OFF
 
 RUN apt-get update -y
@@ -23,8 +24,18 @@ COPY . tensorflow_cc
 # install tensorflow
 RUN mkdir /tensorflow_cc/tensorflow_cc/build
 WORKDIR /tensorflow_cc/tensorflow_cc/build
-RUN cmake -DTENSORFLOW_SHARED=${shared} ..
-RUN make && make install
+# configure only shared or only static library
+RUN if [ "${shared}" = "OFF" ]; then \
+        cmake ..; \
+    else \
+        cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..; \
+    fi
+# build
+RUN make
+# cleanup after bazel
+RUN rm -rf ~/.cache
+# install
+RUN make install
 
 # build and run example
 RUN mkdir /tensorflow_cc/example/build

@@ -43,7 +43,7 @@ cd tensorflow_cc
 mkdir build && cd build
 cmake ..
 # alternatively, use the following for GPU support
-# cmake -DTENSORFLOW_SHARED=ON ..
+# cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..
 make && sudo make install
 ```
 
@@ -77,7 +77,9 @@ int main()
 
 find_package(TensorflowCC REQUIRED)
 add_executable(example example.cpp)
-target_link_libraries(example TensorflowCC)
+target_link_libraries(example TensorflowCC::Static)
+# alternatively, use the following for GPU support
+# target_link_libraries(example TensorflowCC::Shared)
 ```
 
 #### 3) Build and run your program
