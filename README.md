@@ -36,15 +36,37 @@ git clone https://github.com/FloopCZ/tensorflow_cc.git
 cd tensorflow_cc
 ```
 
-#### 3) Install the library
+#### 3) Build and install the library
+
+There are two possible ways to build the TensorFlow C++ library:
+1. As a __static library__ (default):
+    - Faster to build.
+    - Provides only basic functionality, just enough for inferring using an existing network
+      (see [contrib/makefile](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/makefile)).
+    - No GPU support.
+2. As a __shared library__:
+    - Requires [Bazel](https://bazel.build/).
+    - Slower to build.
+    - Provides the full TensorFlow C++ API.
+    - GPU support.
 
 ```
 cd tensorflow_cc
 mkdir build && cd build
+# for static library only:
 cmake ..
-# alternatively, use the following for GPU support
+# for shared library only (requires Bazel):
 # cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..
 make && sudo make install
+```
+
+#### 4) (Optional) Free disk space
+
+```
+# cleanup bazel build directory
+rm -rf ~/.cache
+# remove the build folder
+cd .. && rm -rf build
 ```
 
 ## Usage
@@ -77,8 +99,9 @@ int main()
 
 find_package(TensorflowCC REQUIRED)
 add_executable(example example.cpp)
+# link the static Tensorflow library
 target_link_libraries(example TensorflowCC::Static)
-# alternatively, use the following for GPU support
+# link the shared Tensorflow library
 # target_link_libraries(example TensorflowCC::Shared)
 ```
 
