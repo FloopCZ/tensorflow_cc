@@ -4,7 +4,7 @@ FROM ubuntu
 ARG shared=OFF
 
 RUN apt-get update -y
-RUN apt-get -y install build-essential curl git cmake unzip autoconf autogen libtool mlocate \
+RUN apt-get -y install build-essential curl git cmake unzip autoconf autogen libtool mlocate zlib1g-dev \
                        python python3-numpy python3-dev python3-pip python3-wheel
 RUN apt-get -y clean
 
