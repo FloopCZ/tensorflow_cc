@@ -10,6 +10,7 @@ ExternalProject_Add(
   DOWNLOAD_COMMAND ""
   UPDATE_COMMAND ""
   CONFIGURE_COMMAND tensorflow/contrib/makefile/compile_linux_protobuf.sh
+            COMMAND tensorflow/contrib/makefile/compile_nsync.sh
             COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/build_tensorflow.sh" .
             COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/copy_links.sh" .
             COMMAND ./build_tensorflow.sh
