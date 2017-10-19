@@ -47,7 +47,7 @@ if(TENSORFLOW_SHARED)
   add_library(tensorflow_cc_shared INTERFACE)
   target_compile_options(
     tensorflow_cc_shared INTERFACE
-    "-std=c++1z"
+    "-std=c++17"
   )
   add_dependencies(
     tensorflow_cc_shared
@@ -105,6 +105,7 @@ if(TENSORFLOW_STATIC)
     "-Wl,--whole-archive ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.a"
     "-Wl,--no-whole-archive"
     "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libprotobuf.a"
+    "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
     dl pthread
   )
 endif()
@@ -163,6 +164,7 @@ endif()
 if(TENSORFLOW_STATIC)
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/gen/lib/libtensorflow-core.a"
+          "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/downloads/nsync/builds/default.linux.c++11/nsync.a"
     DESTINATION lib/tensorflow_cc
   )
 endif()
