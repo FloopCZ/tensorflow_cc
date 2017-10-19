@@ -32,7 +32,7 @@ sudo updatedb
 For GPU support on Arch, also install the following:
 
 ```
-sudo pacman -S gcc6 bazel cuda cudnn6 nvidia
+sudo pacman -S gcc6 bazel cuda cudnn nvidia
 ```
 
 #### 2) Clone this repository
