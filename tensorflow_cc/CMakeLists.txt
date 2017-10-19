@@ -66,6 +66,7 @@ if(TENSORFLOW_SHARED)
   target_link_libraries(
     tensorflow_cc_shared INTERFACE
     "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow_cc.so"
+    "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow_framework.so"
     # static protobuf is used from the contrib/makefile
     "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libprotobuf.a"
     dl pthread
@@ -154,6 +155,7 @@ install(
 if(TENSORFLOW_SHARED)
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_cc.so"
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_framework.so"
     DESTINATION lib/tensorflow_cc
   )
 endif()
