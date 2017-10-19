@@ -155,7 +155,7 @@ install(
 if(TENSORFLOW_SHARED)
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_cc.so"
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_framework.so"
+          "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_framework.so"
     DESTINATION lib/tensorflow_cc
   )
 endif()
