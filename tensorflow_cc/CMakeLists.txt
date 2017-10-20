@@ -47,7 +47,7 @@ if(TENSORFLOW_SHARED)
   add_library(tensorflow_cc_shared INTERFACE)
   target_compile_options(
     tensorflow_cc_shared INTERFACE
-    "-std=c++1z"
+    "-std=c++17"
   )
   add_dependencies(
     tensorflow_cc_shared
@@ -60,11 +60,13 @@ if(TENSORFLOW_SHARED)
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/eigen"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/gemmlowp"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/nsync/public"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/protobuf-host/include"
   )
   target_link_libraries(
     tensorflow_cc_shared INTERFACE
     "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow_cc.so"
+    "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow_framework.so"
     # static protobuf is used from the contrib/makefile
     "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libprotobuf.a"
     dl pthread
@@ -92,6 +94,7 @@ if(TENSORFLOW_STATIC)
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/eigen"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/gemmlowp"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/nsync/public"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/protobuf-host/include"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto_text"
@@ -102,6 +105,7 @@ if(TENSORFLOW_STATIC)
     "-Wl,--whole-archive ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.a"
     "-Wl,--no-whole-archive"
     "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libprotobuf.a"
+    "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
     dl pthread
   )
 endif()
@@ -152,6 +156,7 @@ install(
 if(TENSORFLOW_SHARED)
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_cc.so"
+          "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_framework.so"
     DESTINATION lib/tensorflow_cc
   )
 endif()
@@ -159,6 +164,7 @@ endif()
 if(TENSORFLOW_STATIC)
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/gen/lib/libtensorflow-core.a"
+          "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/downloads/nsync/builds/default.linux.c++11/nsync.a"
     DESTINATION lib/tensorflow_cc
   )
 endif()

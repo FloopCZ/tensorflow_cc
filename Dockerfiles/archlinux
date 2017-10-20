@@ -3,7 +3,7 @@ FROM pritunl/archlinux
 # denotes whether shared or static tensorflow is built
 ARG shared=OFF
 
-RUN pacman -S --noconfirm base-devel cmake gcc5 bazel git unzip mlocate \
+RUN pacman -S --noconfirm base-devel cmake gcc6 bazel git unzip mlocate \
                           python python-numpy
 RUN pacman -Scc --noconfirm
 
