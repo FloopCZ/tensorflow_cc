@@ -4,7 +4,7 @@ FROM pritunl/archlinux
 ARG shared=OFF
 
 RUN pacman -S --noconfirm base-devel cmake gcc6 bazel git unzip mlocate \
-                          python python-numpy
+                          python python-numpy wget
 RUN pacman -Scc --noconfirm
 
 # when building TF with Intel MKL support, `locate` database needs to exist

@@ -25,7 +25,7 @@ If you require GPU support on Ubuntu, please also install [Bazel](https://bazel.
 
 ##### Arch Linux:
 ```
-sudo pacman -S base-devel cmake git unzip mlocate python python-numpy
+sudo pacman -S base-devel cmake git unzip mlocate python python-numpy wget
 sudo updatedb
 ```
 
