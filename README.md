@@ -59,9 +59,9 @@ There are two possible ways to build the TensorFlow C++ library:
 cd tensorflow_cc
 mkdir build && cd build
 # for static library only:
-cmake ..
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local ..
 # for shared library only (requires Bazel):
-# cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..
+# cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON -DCMAKE_INSTALL_PREFIX=/usr/local ..
 make && sudo make install
 ```
 
