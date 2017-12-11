@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 # This file recursively traverses a directory and replaces each
 # link by a copy of its target.
