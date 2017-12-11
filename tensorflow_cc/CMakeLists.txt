@@ -46,7 +46,7 @@ endif()
 # ----------------------------------
 if(SYSTEM_PROTOBUF)
   if(NOT TENSORFLOW_STATIC)
-    message(WARNING "SYSTEM_PROTOBUF is only supported with TENSORFLOW_STATIC.")
+    message(FATAL_ERROR "SYSTEM_PROTOBUF is only supported with TENSORFLOW_STATIC.")
   endif()
   find_package(Protobuf REQUIRED)
 endif()
