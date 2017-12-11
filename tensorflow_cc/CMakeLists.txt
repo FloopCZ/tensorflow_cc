@@ -80,25 +80,6 @@ if(TENSORFLOW_SHARED)
     "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow_framework.so"
     dl pthread
   )
-  if(SYSTEM_PROTOBUF)
-    target_include_directories(
-      tensorflow_cc_shared INTERFACE
-      "${Protobuf_INCLUDE_DIRS}"
-    )
-    target_link_libraries(
-      tensorflow_cc_shared INTERFACE
-      "${Protobuf_LIBRARIES}"
-    )
-  else()
-    target_include_directories(
-      tensorflow_cc_shared INTERFACE
-      "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/protobuf-host/include"
-    )
-    target_link_libraries(
-      tensorflow_cc_shared INTERFACE
-      "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libprotobuf.a"
-    )
-  endif()
 endif()
 
 # ----------------------------------
