@@ -19,13 +19,22 @@ export PYTHON_BIN_PATH="$(which python3)"
 export PYTHON_LIB_PATH="$($PYTHON_BIN_PATH -c 'import site; print(site.getsitepackages()[0])')"
 
 # configure cuda environmental variables
+
 if [ -e /opt/cuda ]; then
+    echo "Using CUDA from /opt/cuda"
+    export CUDA_TOOLKIT_PATH=/opt/cuda
+    export CUDNN_INSTALL_PATH=/opt/cuda
+elif [ -e /usr/local/cuda ]; then
+    echo "Using CUDA from /usr/local/cuda"
+    export CUDA_TOOLKIT_PATH=/usr/local/cuda
+    export CUDNN_INSTALL_PATH=/usr/local/cuda
+fi
+
+if [ -n "${CUDA_TOOLKIT_PATH}" ]; then
     echo "CUDA support enabled"
     cuda_config_opts="--config=cuda"
     export TF_NEED_CUDA=1
     export TF_CUDA_COMPUTE_CAPABILITIES="3.5,5.2,6.1,6.2"
-    export CUDA_TOOLKIT_PATH=/opt/cuda
-    export CUDNN_INSTALL_PATH=/opt/cuda
     export TF_CUDA_VERSION="$($CUDA_TOOLKIT_PATH/bin/nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')"
     export TF_CUDNN_VERSION="$(sed -n 's/^#define CUDNN_MAJOR\s*\(.*\).*/\1/p' $CUDNN_INSTALL_PATH/include/cudnn.h)"
     # use gcc-5 for now, clang in the future
