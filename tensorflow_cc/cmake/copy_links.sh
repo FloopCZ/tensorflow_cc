@@ -9,5 +9,5 @@ find "$1" -type l -print0 |
     while IFS= read -r -d $'\0' f; do
         realf="$(realpath "$f")"
         rm "$f"
-        cp -r --no-target-directory "$realf" "$f"
+        cp -r "$realf" "$f"
     done
