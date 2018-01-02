@@ -3,9 +3,19 @@ FROM pritunl/archlinux
 # denotes whether shared or static tensorflow is built
 ARG shared=OFF
 
-RUN pacman -S --noconfirm base-devel cmake gcc6 bazel git unzip mlocate \
-                          python python-numpy wget
-RUN pacman -Scc --noconfirm
+# install requirements
+RUN pacman -S --noconfirm --needed \
+      base-devel \
+      cmake \
+      gcc6 \
+      bazel \
+      git \
+      unzip \
+      mlocate \
+      python \
+      python-numpy \
+      wget \
+  && paccache -rfk0
 
 # when building TF with Intel MKL support, `locate` database needs to exist
 RUN updatedb
@@ -23,13 +33,13 @@ RUN if [ "${shared}" = "OFF" ]; then \
         cmake ..; \
     else \
         cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..; \
-    fi
-# build
-RUN make
-# cleanup after bazel
-RUN rm -rf ~/.cache
-# install
-RUN make install
+    fi \
+  # build
+  && make \
+  # cleanup after bazel
+  && rm -rf ~/.cache \
+  # install
+  && make install
 
 # build and run example
 RUN mkdir /tensorflow_cc/example/build
