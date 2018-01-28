@@ -49,5 +49,8 @@ fi
 
 # configure and build
 ./configure
-bazel build -c opt $cuda_config_opts --copt=${CC_OPT_FLAGS} tensorflow:libtensorflow_cc.so
+bazel build -c opt \
+            $cuda_config_opts \
+            --incompatible_load_argument_is_label=false \
+            --copt=${CC_OPT_FLAGS} tensorflow:libtensorflow_cc.so
 bazel shutdown
