@@ -23,14 +23,27 @@ export PYTHON_LIB_PATH="$($PYTHON_BIN_PATH -c 'import site; print(site.getsitepa
 if [ -e /opt/cuda ]; then
     echo "Using CUDA from /opt/cuda"
     export CUDA_TOOLKIT_PATH=/opt/cuda
-    export CUDNN_INSTALL_PATH=/opt/cuda
 elif [ -e /usr/local/cuda ]; then
     echo "Using CUDA from /usr/local/cuda"
     export CUDA_TOOLKIT_PATH=/usr/local/cuda
+fi
+
+if [ -e /opt/cuda/include/cudnn.h ]; then
+    echo "Using CUDNN from /opt/cuda"
+    export CUDNN_INSTALL_PATH=/opt/cuda
+elif [ -e /usr/local/cuda/cudnn.h ]; then
+    echo "Using CUDNN from /usr/local/cuda"
     export CUDNN_INSTALL_PATH=/usr/local/cuda
+elif [ -e /usr/include/cudnn.h ]; then
+    echo "Using CUDNN from /usr"
+    export CUDNN_INSTALL_PATH=/usr
 fi
 
 if [ -n "${CUDA_TOOLKIT_PATH}" ]; then
+    if [[ -z "${CUDNN_INSTALL_PATH}" ]]; then
+        echo "CUDA found but no cudnn.h found. Please install cuDNN."
+        exit 1
+    fi
     echo "CUDA support enabled"
     cuda_config_opts="--config=cuda"
     export TF_NEED_CUDA=1
