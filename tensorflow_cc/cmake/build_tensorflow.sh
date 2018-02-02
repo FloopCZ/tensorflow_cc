@@ -6,6 +6,8 @@ export CC_OPT_FLAGS="-march=native"
 export TF_NEED_GCP=0
 export TF_NEED_HDFS=0
 export TF_NEED_OPENCL=0
+export TF_NEED_OPENCL_SYCL=0
+export TF_NEED_TENSORRT=0
 export TF_NEED_JEMALLOC=1
 export TF_NEED_VERBS=0
 export TF_NEED_MKL=1
@@ -16,6 +18,7 @@ export TF_NEED_S3=0
 export TF_NEED_GDR=0
 export TF_CUDA_CLANG=0
 export TF_SET_ANDROID_WORKSPACE=0
+export TF_NEED_KAFKA=0
 export PYTHON_BIN_PATH="$(which python3)"
 export PYTHON_LIB_PATH="$($PYTHON_BIN_PATH -c 'import site; print(site.getsitepackages()[0])')"
 
