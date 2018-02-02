@@ -15,6 +15,7 @@ export TF_ENABLE_XLA=1
 export TF_NEED_S3=0
 export TF_NEED_GDR=0
 export TF_CUDA_CLANG=0
+export TF_SET_ANDROID_WORKSPACE=0
 export PYTHON_BIN_PATH="$(which python3)"
 export PYTHON_LIB_PATH="$($PYTHON_BIN_PATH -c 'import site; print(site.getsitepackages()[0])')"
 
@@ -50,7 +51,7 @@ if [ -n "${CUDA_TOOLKIT_PATH}" ]; then
     export TF_CUDA_COMPUTE_CAPABILITIES="3.5,5.2,6.1,6.2"
     export TF_CUDA_VERSION="$($CUDA_TOOLKIT_PATH/bin/nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')"
     export TF_CUDNN_VERSION="$(sed -n 's/^#define CUDNN_MAJOR\s*\(.*\).*/\1/p' $CUDNN_INSTALL_PATH/include/cudnn.h)"
-    # use gcc-5 for now, clang in the future
+    # use gcc-6 for now, clang in the future
     export GCC_HOST_COMPILER_PATH=/usr/bin/gcc-6
     export CLANG_CUDA_COMPILER_PATH=/usr/bin/clang
     export TF_CUDA_CLANG=0
