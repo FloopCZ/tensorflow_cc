@@ -10,7 +10,9 @@ find -L "$1" -print0 |
         # We need to check whether the file is still a link.
         # It may have happened that we have already replaced it by
         # the original when some of its parent directories were copied.
-        if [[ -L "$f" ]]; then
+        # Also the first check is to detect whether the file (after
+        # symlink dereference) exists so that `realpath` does not fail.
+        if [[ -e "$f" ]] && [[ -L "$f" ]]; then
             realf="$(realpath "$f")"
             rm "$f"
             cp -r "$realf" "$f"
