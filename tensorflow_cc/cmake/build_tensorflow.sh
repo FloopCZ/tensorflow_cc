@@ -35,7 +35,7 @@ fi
 if [ -e /opt/cuda/include/cudnn.h ]; then
     echo "Using CUDNN from /opt/cuda"
     export CUDNN_INSTALL_PATH=/opt/cuda
-elif [ -e /usr/local/cuda/cudnn.h ]; then
+elif [ -e /usr/local/cuda/include/cudnn.h ]; then
     echo "Using CUDNN from /usr/local/cuda"
     export CUDNN_INSTALL_PATH=/usr/local/cuda
 elif [ -e /usr/include/cudnn.h ]; then
