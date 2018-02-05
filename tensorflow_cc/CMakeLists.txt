@@ -9,8 +9,7 @@ project(
 # If enabled, bazel has to be installed.
 option(TENSORFLOW_SHARED "Build shared library (required for GPU support)." OFF)
 option(TENSORFLOW_STATIC "Build static library." ON)
-option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile.\
- This option is only supported with TENSORFLOW_STATIC." OFF)
+option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." OFF)
 
 # -------------
 # CMake Options
@@ -80,6 +79,25 @@ if(TENSORFLOW_SHARED)
     "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow_framework.so"
     dl pthread
   )
+  if(SYSTEM_PROTOBUF)
+    target_include_directories(
+      tensorflow_cc_shared INTERFACE
+      "${Protobuf_INCLUDE_DIRS}"
+    )
+    target_link_libraries(
+      tensorflow_cc_shared INTERFACE
+      "${Protobuf_LIBRARIES}"
+    )
+  else()
+    target_include_directories(
+      tensorflow_cc_shared INTERFACE
+      "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/protobuf-host/include"
+    )
+    target_link_libraries(
+      tensorflow_cc_shared INTERFACE
+      "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libprotobuf.a"
+    )
+  endif()
 endif()
 
 # ----------------------------------
