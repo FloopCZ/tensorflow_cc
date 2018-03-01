@@ -181,10 +181,21 @@ install(
   DESTINATION include/tensorflow
   FILES_MATCHING PATTERN "*.h"
 )
-# install all files downloaded by contrib/makefile as dependencies
+# install all header files downloaded by contrib/makefile
+# (Note that we cannot simply include all *.h or *.hpp files, since e.g., eigen
+# does not use file extensions for header files.)
 install(
   DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/downloads/"
   DESTINATION include/tensorflow/tensorflow/contrib/makefile/downloads
+  FILES_MATCHING PATTERN "*.o"     EXCLUDE
+                 PATTERN "*.so"    EXCLUDE
+                 PATTERN "*.so.*"  EXCLUDE
+                 PATTERN "*.a"     EXCLUDE
+                 PATTERN "*.tbz"   EXCLUDE
+                 PATTERN "*.tgz"   EXCLUDE
+                 PATTERN "*.tar"   EXCLUDE
+                 PATTERN "*.tar.*" EXCLUDE
+                 PATTERN "*.zip"   EXCLUDE
 )
 # install all files from third_party folder (e.g., Eigen/Tensor)
 install(
