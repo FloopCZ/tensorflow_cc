@@ -187,15 +187,18 @@ install(
 install(
   DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/downloads/"
   DESTINATION include/tensorflow/tensorflow/contrib/makefile/downloads
-  FILES_MATCHING PATTERN "*.o"     EXCLUDE
-                 PATTERN "*.so"    EXCLUDE
-                 PATTERN "*.so.*"  EXCLUDE
-                 PATTERN "*.a"     EXCLUDE
-                 PATTERN "*.tbz"   EXCLUDE
-                 PATTERN "*.tgz"   EXCLUDE
-                 PATTERN "*.tar"   EXCLUDE
-                 PATTERN "*.tar.*" EXCLUDE
-                 PATTERN "*.zip"   EXCLUDE
+  FILES_MATCHING PATTERN "*"
+                 PATTERN "Makefile*"  EXCLUDE
+                 PATTERN "*unittest*" EXCLUDE
+                 PATTERN "*.o"        EXCLUDE
+                 PATTERN "*.so"       EXCLUDE
+                 PATTERN "*.so.*"     EXCLUDE
+                 PATTERN "*.a"        EXCLUDE
+                 PATTERN "*.tbz"      EXCLUDE
+                 PATTERN "*.tgz"      EXCLUDE
+                 PATTERN "*.tar"      EXCLUDE
+                 PATTERN "*.tar.*"    EXCLUDE
+                 PATTERN "*.zip"      EXCLUDE
 )
 # install all files from third_party folder (e.g., Eigen/Tensor)
 install(
