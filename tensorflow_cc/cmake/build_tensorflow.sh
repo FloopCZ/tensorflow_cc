@@ -69,5 +69,6 @@ fi
 bazel build -c opt \
             $cuda_config_opts \
             --incompatible_load_argument_is_label=false \
+            --config=monolithic \
             --copt=${CC_OPT_FLAGS} tensorflow:libtensorflow_cc.so
 bazel shutdown
