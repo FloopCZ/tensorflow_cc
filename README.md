@@ -6,6 +6,30 @@ This repository makes possible the usage of the [TensorFlow C++](https://www.ten
 
 This repository contains two CMake projects. The [tensorflow_cc](tensorflow_cc) project downloads, builds and installs the TensorFlow C++ library into the operating system and the [example](example) project demonstrates its simple usage.
 
+## Docker [new]
+
+If you wish to start using this project right away, fetch a prebuilt image on [Docker Hub](https://hub.docker.com/r/floopcz/tensorflow_cc/)!
+
+Running the image on CPU:
+```bash
+docker run -it floopcz/tensorflow_cc:ubuntu-shared /bin/bash
+```
+
+If you also want to utilize your NVIDIA GPU, install [NVIDIA Docker](https://github.com/NVIDIA/nvidia-docker) and run:
+```bash
+docker run --runtime=nvidia -it floopcz/tensorflow_cc:ubuntu-shared-cuda /bin/bash
+```
+
+The list of available images:
+
+| Image name                                    | Description                                                |
+| ---                                           | ---                                                        |
+| `floopcz/tensorflow_cc:ubuntu-static`         | Ubuntu + static build of `tensorflow_cc`                   |
+| `floopcz/tensorflow_cc:ubuntu-shared`         | Ubuntu + shared build of `tensorflow_cc`                   |
+| `floopcz/tensorflow_cc:ubuntu-shared-cuda`    | Ubuntu + shared build of `tensorflow_cc` + NVIDIA CUDA     |
+| `floopcz/tensorflow_cc:archlinux-shared`      | Arch Linux + shared build of `tensorflow_cc`               |
+| `floopcz/tensorflow_cc:archlinux-shared-cuda` | Arch Linux + shared build of `tensorflow_cc` + NVIDIA CUDA |
+
 ## Installation
 
 #### 1) Install requirements
@@ -119,4 +143,4 @@ cmake .. && make
 ```
 
 If you are still unsure, consult the Dockerfiles for
-[Ubuntu](Dockerfiles/ubuntu) and [Arch Linux](Dockerfiles/archlinux).
+[Ubuntu](Dockerfiles/ubuntu-shared) and [Arch Linux](Dockerfiles/archlinux-shared).
