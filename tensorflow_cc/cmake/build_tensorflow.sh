@@ -2,7 +2,7 @@
 set -e
 
 # configure environmental variables
-export CC_OPT_FLAGS=${CC_OPT_FLAGS:-"-march=native"}
+export CC_OPT_FLAGS=${CC_OPT_FLAGS:-"-march=haswell"}
 export TF_NEED_GCP=${TF_NEED_GCP:-0}
 export TF_NEED_HDFS=${TF_NEED_HDFS:-0}
 export TF_NEED_OPENCL=${TF_NEED_OPENCL:-0}
@@ -49,7 +49,7 @@ if [ -n "${CUDA_TOOLKIT_PATH}" ]; then
         exit 1
     fi
     echo "CUDA support enabled"
-    cuda_config_opts="--config=cuda"
+    cuda_config_opts="--cxxopt=-I${CUDA_TOOLKIT_PATH}/include/crt --config=opt --config=cuda"
     export TF_NEED_CUDA=1
     export TF_CUDA_COMPUTE_CAPABILITIES=${TF_CUDA_COMPUTE_CAPABILITIES:-"3.5,5.2,6.1,6.2"}
     export TF_CUDA_VERSION="$($CUDA_TOOLKIT_PATH/bin/nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')"
@@ -68,7 +68,6 @@ fi
 ./configure
 bazel build -c opt \
             $cuda_config_opts \
-            --incompatible_load_argument_is_label=false \
             --config=monolithic \
-            --copt=${CC_OPT_FLAGS} tensorflow:libtensorflow_cc.so
+            tensorflow:libtensorflow_cc.so
 bazel shutdown
