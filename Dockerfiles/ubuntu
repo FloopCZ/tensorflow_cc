@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM nvidia/cuda:9.1-cudnn7-devel
 
 # denotes whether shared or static tensorflow is built
 ARG shared=OFF
@@ -14,6 +14,7 @@ RUN apt-get -y update \
 RUN apt-get -y update \
   && apt-get -y install \
        build-essential \
+       cuda-command-line-tools \
        curl \
        git \
        cmake \
@@ -64,9 +65,11 @@ RUN mkdir /tensorflow_cc/tensorflow_cc/build \
   && make install \
   # cleanup build folder
   && cd / \
-  && rm -rf /tensorflow_cc/tensorflow_cc/build
+  && rm -rf /tensorflow_cc/tensorflow_cc
 
 # build and run example
-RUN mkdir /tensorflow_cc/example/build
-WORKDIR /tensorflow_cc/example/build
-RUN cmake .. && make && ./example
+RUN mkdir /tensorflow_cc/example/build \
+  && cd /tensorflow_cc/example/build \
+  && cmake .. && make && ./example \
+  && cd / \
+  && rm -rf /tensorflow_cc

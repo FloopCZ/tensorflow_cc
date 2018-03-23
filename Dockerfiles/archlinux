@@ -44,9 +44,11 @@ RUN mkdir /tensorflow_cc/tensorflow_cc/build \
   && make install \
   # cleanup build folder
   && cd / \
-  && rm -rf /tensorflow_cc/tensorflow_cc/build
+  && rm -rf /tensorflow_cc/tensorflow_cc
 
 # build and run example
-RUN mkdir /tensorflow_cc/example/build
-WORKDIR /tensorflow_cc/example/build
-RUN cmake .. && make && ./example
+RUN mkdir /tensorflow_cc/example/build \
+  && cd /tensorflow_cc/example/build \
+  && cmake .. && make && ./example \
+  && cd / \
+  && rm -rf /tensorflow_cc
