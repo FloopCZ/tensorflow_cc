@@ -47,21 +47,24 @@ COPY . tensorflow_cc
 # alternatively, clone the repository
 # RUN git clone https://github.com/FloopCZ/tensorflow_cc.git
 
-# install tensorflow
-RUN mkdir /tensorflow_cc/tensorflow_cc/build
-WORKDIR /tensorflow_cc/tensorflow_cc/build
-# configure only shared or only static library
-RUN if [ "${shared}" = "OFF" ]; then \
-        cmake ..; \
-    else \
-        cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..; \
-    fi \
+# build and install tensorflow_cc
+RUN mkdir /tensorflow_cc/tensorflow_cc/build \
+  && cd /tensorflow_cc/tensorflow_cc/build \
+  # configure only shared or only static library
+  && if [ "${shared}" = "OFF" ]; then \
+         cmake ..; \
+     else \
+         cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..; \
+     fi \
   # build
   && make \
   # cleanup after bazel
   && rm -rf ~/.cache \
   # install
-  && make install
+  && make install \
+  # cleanup build folder
+  && cd / \
+  && rm -rf /tensorflow_cc/tensorflow_cc/build
 
 # build and run example
 RUN mkdir /tensorflow_cc/example/build
