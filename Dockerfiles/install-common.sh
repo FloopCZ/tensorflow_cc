@@ -40,4 +40,3 @@ cmake .. && make && ./example
 
 cd "$cwd"
 rm -rf ~/.cache
-rm -rf tensorflow_cc
