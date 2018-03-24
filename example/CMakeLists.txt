@@ -10,3 +10,9 @@ else()
   find_package(TensorflowCC REQUIRED COMPONENTS Static)
   target_link_libraries(example TensorflowCC::Static)
 endif()
+
+# link cuda if it is available
+find_package(CUDA)
+if(CUDA_FOUND)
+  target_link_libraries(example ${CUDA_LIBRARIES})
+endif()

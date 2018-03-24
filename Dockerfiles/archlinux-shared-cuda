@@ -1,0 +1,13 @@
+FROM pritunl/archlinux
+
+# copy the contents of this repository to the container
+COPY . tensorflow_cc
+# alternatively, clone the repository
+# RUN git clone https://github.com/FloopCZ/tensorflow_cc.git
+
+# build and install
+RUN ./tensorflow_cc/Dockerfiles/install-archlinux.sh --cuda --shared
+
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_REQUIRE_CUDA "cuda>=9.1"
