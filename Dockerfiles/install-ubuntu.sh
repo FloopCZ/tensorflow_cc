@@ -6,6 +6,7 @@ set -e
 shared=false
 cuda=false
 
+orig=$@
 for key in "$@"; do
     key="$1"
     case $key in
@@ -65,4 +66,4 @@ apt-get -y clean
 updatedb
 
 # build and install tensorflow_cc
-./tensorflow_cc/Dockerfiles/install-common.sh "$@"
+./tensorflow_cc/Dockerfiles/install-common.sh "$orig"
