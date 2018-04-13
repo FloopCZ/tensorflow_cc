@@ -7,11 +7,9 @@ cwd="`pwd`"
 shared=false
 
 for key in "$@"; do
-    key="$1"
     case $key in
         --shared)
         shared=true
-        shift
         ;;
     esac
 done

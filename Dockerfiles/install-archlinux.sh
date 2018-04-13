@@ -7,15 +7,12 @@ shared=false
 cuda=false
 
 for key in "$@"; do
-    key="$1"
     case $key in
         --shared)
         shared=true
-        shift
         ;;
         --cuda)
         cuda=true
-        shift
         ;;
     esac
 done
