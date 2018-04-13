@@ -6,7 +6,7 @@ This repository makes possible the usage of the [TensorFlow C++](https://www.ten
 
 This repository contains two CMake projects. The [tensorflow_cc](tensorflow_cc) project downloads, builds and installs the TensorFlow C++ library into the operating system and the [example](example) project demonstrates its simple usage.
 
-## Docker [new]
+## Docker
 
 If you wish to start using this project right away, fetch a prebuilt image on [Docker Hub](https://hub.docker.com/r/floopcz/tensorflow_cc/)!
 
