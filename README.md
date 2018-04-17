@@ -2,9 +2,9 @@
 [![Build Status](http://ash.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://ash.floop.cz:8080/job/tensorflow_cc/)
 [![TF version](https://img.shields.io/badge/TF%20version-1.7.0-brightgreen.svg)]()
 
-This repository makes possible the usage of the [TensorFlow C++](https://www.tensorflow.org/api_docs/cc/) library from the outside of the TensorFlow source code folders and without the use of the [Bazel](https://bazel.build/) build system.
+This repository makes possible the usage of the [TensorFlow C++](https://www.tensorflow.org/api_docs/cc/) API from the outside of the TensorFlow source code folders and without the use of the [Bazel](https://bazel.build/) build system.
 
-This repository contains two CMake projects. The [tensorflow_cc](tensorflow_cc) project downloads, builds and installs the TensorFlow C++ library into the operating system and the [example](example) project demonstrates its simple usage.
+This repository contains two CMake projects. The [tensorflow_cc](tensorflow_cc) project downloads, builds and installs the TensorFlow C++ API into the operating system and the [example](example) project demonstrates its simple usage.
 
 ## Docker
 
