@@ -24,7 +24,8 @@ if $shared; then
 else
     cmake ..;
 fi
-make && make install
+make
+make install
 cd "$cwd"
 rm -rf tensorflow_cc/tensorflow_cc/build
 
@@ -32,7 +33,9 @@ rm -rf tensorflow_cc/tensorflow_cc/build
 
 mkdir tensorflow_cc/example/build
 cd tensorflow_cc/example/build
-cmake .. && make && ./example
+cmake ..
+make
+./example
 
 ### cleanup ###
 
