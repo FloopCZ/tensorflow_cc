@@ -56,7 +56,7 @@ if(TENSORFLOW_SHARED)
   add_library(tensorflow_cc_shared INTERFACE)
   target_compile_options(
     tensorflow_cc_shared INTERFACE
-    "-std=c++11"
+    "$<$<COMPILE_LANGUAGE:CXX>:-std=c++11>"
   )
   add_dependencies(
     tensorflow_cc_shared
@@ -105,7 +105,7 @@ if(TENSORFLOW_STATIC)
   add_library(tensorflow_cc_static INTERFACE)
   target_compile_options(
     tensorflow_cc_static INTERFACE
-    "-std=c++11"
+    "$<$<COMPILE_LANGUAGE:CXX>:-std=c++11>"
   )
   add_dependencies(
     tensorflow_cc_static
