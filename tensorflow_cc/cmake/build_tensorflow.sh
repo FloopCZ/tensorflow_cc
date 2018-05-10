@@ -19,6 +19,8 @@ export TF_NEED_GDR=${TF_NEED_GDR:-0}
 export TF_CUDA_CLANG=${TF_CUDA_CLANG:-0}
 export TF_SET_ANDROID_WORKSPACE=${TF_SET_ANDROID_WORKSPACE:-0}
 export TF_NEED_KAFKA=${TF_NEED_KAFKA:-0}
+export TF_DOWNLOAD_CLANG=${TF_DOWNLOAD_CLANG:-0}
+export TF_NCCL_VERSION=${TF_NCCL_VERSION:-1.3}  # _DEFAULT_NCCL_VERSION from configure.py
 export PYTHON_BIN_PATH=${PYTHON_BIN_PATH:-"$(which python3)"}
 export PYTHON_LIB_PATH="$($PYTHON_BIN_PATH -c 'import site; print(site.getsitepackages()[0])')"
 
