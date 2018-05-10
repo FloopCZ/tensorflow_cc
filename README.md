@@ -34,10 +34,10 @@ The list of available images:
 
 #### 1) Install requirements
 
-##### Ubuntu 18.04+:
+##### Ubuntu 16.04+:
 ```
 sudo apt-get install build-essential curl git cmake unzip autoconf autogen libtool mlocate zlib1g-dev \
-                     g++-5 python python3-numpy python3-dev python3-pip python3-wheel wget
+                     g++-6 python python3-numpy python3-dev python3-pip python3-wheel wget
 sudo updatedb
 ```
 
@@ -52,7 +52,7 @@ sudo updatedb
 For GPU support on Arch, also install the following:
 
 ```
-sudo pacman -S gcc5 bazel cuda cudnn nvidia
+sudo pacman -S gcc54 bazel cuda cudnn nvidia
 ```
 
 #### 2) Clone this repository

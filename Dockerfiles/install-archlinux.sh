@@ -18,7 +18,7 @@ for key in "$@"; do
 done
 
 # install requirements
-pacman -S --noconfirm --needed \
+pacman -Syu --noconfirm --needed \
   base-devel \
   cmake \
   git \
@@ -30,7 +30,7 @@ pacman -S --noconfirm --needed \
 
 if $shared; then
     pacman -S --noconfirm --needed \
-      gcc6 \
+      gcc54 \
       bazel
 fi
 if $cuda; then
