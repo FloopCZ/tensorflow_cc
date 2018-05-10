@@ -31,7 +31,17 @@ pacman -S --noconfirm --needed \
 if $shared; then
     pacman -S --noconfirm --needed \
       gcc6 \
-      bazel
+      java-environment=8 \
+      libarchive \
+      protobuf \
+      unzip \
+      zip
+    export BAZEL_VERSION=${BAZEL_VERSION:-0.11.0}
+    bazel_installer=bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh
+    wget -P /tmp https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${bazel_installer}
+    chmod +x /tmp/${bazel_installer}
+    /tmp/${bazel_installer}
+    rm /tmp/${bazel_installer}
 fi
 if $cuda; then
     pacman -S --noconfirm --needed \
