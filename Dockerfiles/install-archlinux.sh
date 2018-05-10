@@ -36,7 +36,7 @@ if $shared; then
       protobuf \
       unzip \
       zip
-    export BAZEL_VERSION=${BAZEL_VERSION:-0.11.0}
+    export BAZEL_VERSION=${BAZEL_VERSION:-`cat ./tensorflow_cc/Dockerfiles/BAZEL_VERSION`}
     bazel_installer=bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh
     wget -P /tmp https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${bazel_installer}
     chmod +x /tmp/${bazel_installer}
