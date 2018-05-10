@@ -6,4 +6,8 @@ COPY . tensorflow_cc
 # RUN git clone https://github.com/FloopCZ/tensorflow_cc.git
 
 # build and install
-RUN ./tensorflow_cc/Dockerfiles/install-ubuntu.sh --shared --cuda
+# temporarily use the CUDA stubs, the real libraries will be provided by nvidia-docker
+RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1 \
+  && LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs/:$LD_LIBRARY_PATH \
+    ./tensorflow_cc/Dockerfiles/install-ubuntu.sh --shared --cuda \
+  && rm /usr/local/cuda/lib64/stubs/libcuda.so.1
