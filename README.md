@@ -30,6 +30,11 @@ The list of available images:
 | `floopcz/tensorflow_cc:archlinux-shared`      | Arch Linux + shared build of `tensorflow_cc`               |
 | `floopcz/tensorflow_cc:archlinux-shared-cuda` | Arch Linux + shared build of `tensorflow_cc` + NVIDIA CUDA |
 
+To build one of the images yourself, e.g. `ubuntu-shared`, run:
+```bash
+docker build -t floopcz/tensorflow_cc:ubuntu-shared -f Dockerfiles/ubuntu-shared .
+```
+
 ## Installation
 
 #### 1) Install requirements
@@ -54,6 +59,9 @@ For GPU support on Arch, also install the following:
 ```
 sudo pacman -S gcc54 bazel cuda cudnn nvidia
 ```
+
+**Warning:** Newer versions of TensorFlow sometimes fail to build with the latest version of Bazel. You may wish
+to install an older version of Bazel (e.g., 0.11.1).
 
 #### 2) Clone this repository
 ```
