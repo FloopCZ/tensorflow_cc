@@ -93,6 +93,10 @@ cmake ..
 make && sudo make install
 ```
 
+**Warning:** Optimizations for Intel CPU series `>=haswell` are enabled by default. If you have a
+processor that is older than `haswell` series, you may wish to run `export CC_OPT_FLAGS="-march=native"`
+before the build.
+
 #### 4) (Optional) Free disk space
 
 ```
