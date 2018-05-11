@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Test whether one version ($1) is less than or equal to other ($2).
+function version_gt {
+    test "`printf '%s\n' "$@" | sort -V | head -n 1`" != "$1"
+}
+
 # configure environmental variables
 export CC_OPT_FLAGS=${CC_OPT_FLAGS:-"-march=haswell"}
 export TF_NEED_GCP=${TF_NEED_GCP:-0}
@@ -19,6 +24,8 @@ export TF_NEED_GDR=${TF_NEED_GDR:-0}
 export TF_CUDA_CLANG=${TF_CUDA_CLANG:-0}
 export TF_SET_ANDROID_WORKSPACE=${TF_SET_ANDROID_WORKSPACE:-0}
 export TF_NEED_KAFKA=${TF_NEED_KAFKA:-0}
+export TF_DOWNLOAD_CLANG=${TF_DOWNLOAD_CLANG:-0}
+export TF_NCCL_VERSION=${TF_NCCL_VERSION:-1.3}  # _DEFAULT_NCCL_VERSION from configure.py
 export PYTHON_BIN_PATH=${PYTHON_BIN_PATH:-"$(which python3)"}
 export PYTHON_LIB_PATH="$($PYTHON_BIN_PATH -c 'import site; print(site.getsitepackages()[0])')"
 
@@ -54,8 +61,21 @@ if [ -n "${CUDA_TOOLKIT_PATH}" ]; then
     export TF_CUDA_COMPUTE_CAPABILITIES=${TF_CUDA_COMPUTE_CAPABILITIES:-"3.5,5.2,6.1,6.2"}
     export TF_CUDA_VERSION="$($CUDA_TOOLKIT_PATH/bin/nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')"
     export TF_CUDNN_VERSION="$(sed -n 's/^#define CUDNN_MAJOR\s*\(.*\).*/\1/p' $CUDNN_INSTALL_PATH/include/cudnn.h)"
-    # use gcc-6 for now, clang in the future
-    export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-6"}
+
+    # choose the right version of CUDA compiler
+    if [ -z "$GCC_HOST_COMPILER_PATH" ]; then
+        if   hash gcc-6 2>/dev/null && version_gt 6.4 `gcc-6 -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-6"}
+        elif hash gcc-5 2>/dev/null && version_gt 5.5 `gcc-5 -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-5"}
+        elif hash gcc-4 2>/dev/null && version_gt 4.9 `gcc-4 -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-4"}
+        else
+            echo "No supported CUDA compiler available."
+            exit 1
+        fi
+    fi
+
     export CLANG_CUDA_COMPILER_PATH=${CLANG_CUDA_COMPILER_PATH:-"/usr/bin/clang"}
     export TF_CUDA_CLANG=${TF_CUDA_CLANG:-0}
 else

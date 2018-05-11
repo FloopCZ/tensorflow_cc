@@ -1,6 +1,6 @@
 # tensorflow_cc
 [![Build Status](http://ash.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://ash.floop.cz:8080/job/tensorflow_cc/)
-[![TF version](https://img.shields.io/badge/TF%20version-1.7.0-brightgreen.svg)]()
+[![TF version](https://img.shields.io/badge/TF%20version-1.8.0-brightgreen.svg)]()
 
 This repository makes possible the usage of the [TensorFlow C++](https://www.tensorflow.org/api_docs/cc/) API from the outside of the TensorFlow source code folders and without the use of the [Bazel](https://bazel.build/) build system.
 
@@ -30,19 +30,19 @@ The list of available images:
 | `floopcz/tensorflow_cc:archlinux-shared`      | Arch Linux + shared build of `tensorflow_cc`               |
 | `floopcz/tensorflow_cc:archlinux-shared-cuda` | Arch Linux + shared build of `tensorflow_cc` + NVIDIA CUDA |
 
+To build one of the images yourself, e.g. `ubuntu-shared`, run:
+```bash
+docker build -t floopcz/tensorflow_cc:ubuntu-shared -f Dockerfiles/ubuntu-shared .
+```
+
 ## Installation
 
 #### 1) Install requirements
 
 ##### Ubuntu 16.04+:
 ```
-# On Ubuntu 16.04, add ubuntu-toolchain-r PPA (for g++-6)
-# sudo apt-get install software-properties-common
-# sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-# sudo apt-get update
-
 sudo apt-get install build-essential curl git cmake unzip autoconf autogen libtool mlocate zlib1g-dev \
-                     g++-6 python python3-numpy python3-dev python3-pip python3-wheel wget
+                     g++-5 python python3-numpy python3-dev python3-pip python3-wheel wget
 sudo updatedb
 ```
 
@@ -57,8 +57,11 @@ sudo updatedb
 For GPU support on Arch, also install the following:
 
 ```
-sudo pacman -S gcc6 bazel cuda cudnn nvidia
+sudo pacman -S gcc54 bazel cuda cudnn nvidia
 ```
+
+**Warning:** Newer versions of TensorFlow sometimes fail to build with the latest version of Bazel. You may wish
+to install an older version of Bazel (e.g., 0.11.1).
 
 #### 2) Clone this repository
 ```
@@ -89,6 +92,10 @@ cmake ..
 # cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..
 make && sudo make install
 ```
+
+**Warning:** Optimizations for Intel CPU generation `>=haswell` are enabled by default. If you have a
+processor that is older than `haswell` generation, you may wish to run `export CC_OPT_FLAGS="-march=native"`
+before the build.
 
 #### 4) (Optional) Free disk space
 

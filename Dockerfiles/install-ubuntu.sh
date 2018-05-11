@@ -17,12 +17,6 @@ for key in "$@"; do
     esac
 done
 
-# add repository with recent versions of compilers
-apt-get -y update
-apt-get -y install software-properties-common
-add-apt-repository -y ppa:ubuntu-toolchain-r/test
-apt-get -y clean
-
 # install requirements
 apt-get -y update
 apt-get -y install \
@@ -36,7 +30,7 @@ apt-get -y install \
   libtool \
   mlocate \
   zlib1g-dev \
-  g++-6 \
+  g++-5 \
   python \
   python3-numpy \
   python3-dev \
