@@ -49,7 +49,7 @@ if [ -n "${CUDA_TOOLKIT_PATH}" ]; then
         exit 1
     fi
     echo "CUDA support enabled"
-    cuda_config_opts="--config=opt --config=cuda"
+    cuda_config_opts="--config=cuda"
     export TF_NEED_CUDA=1
     export TF_CUDA_COMPUTE_CAPABILITIES=${TF_CUDA_COMPUTE_CAPABILITIES:-"3.5,5.2,6.1,6.2"}
     export TF_CUDA_VERSION="$($CUDA_TOOLKIT_PATH/bin/nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')"
@@ -66,8 +66,8 @@ fi
 
 # configure and build
 ./configure
-bazel build -c opt \
-            $cuda_config_opts \
+bazel build --config=opt \
             --config=monolithic \
+            $cuda_config_opts \
             tensorflow:libtensorflow_cc.so
 bazel shutdown
