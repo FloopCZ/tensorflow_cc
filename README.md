@@ -93,9 +93,10 @@ cmake ..
 make && sudo make install
 ```
 
-**Warning:** Optimizations for Intel CPU generation `>=haswell` are enabled by default. If you have a
-processor that is older than `haswell` generation, you may wish to run `export CC_OPT_FLAGS="-march=native"`
-before the build.
+**Warning:** Optimizations for Intel CPU generation `>=ivybridge` are enabled by default. If you have a
+processor that is older than `ivybridge` generation, you may wish to run `export CC_OPT_FLAGS="-march=native"`
+before the build. This command provides the best possible optimizations for your current CPU generation, but
+it may cause the built library to be incompatible with older generations.
 
 #### 4) (Optional) Free disk space
 

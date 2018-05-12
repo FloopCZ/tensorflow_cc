@@ -7,7 +7,7 @@ function version_gt {
 }
 
 # configure environmental variables
-export CC_OPT_FLAGS=${CC_OPT_FLAGS:-"-march=haswell"}
+export CC_OPT_FLAGS=${CC_OPT_FLAGS:-"-march=ivybridge"}
 export TF_NEED_GCP=${TF_NEED_GCP:-0}
 export TF_NEED_HDFS=${TF_NEED_HDFS:-0}
 export TF_NEED_OPENCL=${TF_NEED_OPENCL:-0}
