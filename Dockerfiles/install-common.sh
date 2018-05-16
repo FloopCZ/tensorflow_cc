@@ -25,6 +25,7 @@ else
     cmake ..;
 fi
 make
+rm -rf ~/.cache
 make install
 cd "$cwd"
 rm -rf tensorflow_cc/tensorflow_cc/build
@@ -36,8 +37,3 @@ cd tensorflow_cc/example/build
 cmake ..
 make
 ./example
-
-### cleanup ###
-
-cd "$cwd"
-rm -rf ~/.cache
