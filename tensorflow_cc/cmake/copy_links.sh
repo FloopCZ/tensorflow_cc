@@ -17,6 +17,6 @@ find -L "$1" -depth -print0 |
         if [[ -e "$f" ]] && [[ -L "$f" ]]; then
             realf="$(realpath "$f")"
             rm "$f"
-            cp -r "$realf" "$f"
+            cp -r --link "$realf" "$f" 2>/dev/null || cp -r "$realf" "$f"
         fi
     done
