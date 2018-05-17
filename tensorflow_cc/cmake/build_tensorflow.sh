@@ -62,20 +62,6 @@ if [ -n "${CUDA_TOOLKIT_PATH}" ]; then
     export TF_CUDA_VERSION="$($CUDA_TOOLKIT_PATH/bin/nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')"
     export TF_CUDNN_VERSION="$(sed -n 's/^#define CUDNN_MAJOR\s*\(.*\).*/\1/p' $CUDNN_INSTALL_PATH/include/cudnn.h)"
 
-    # choose the right version of CUDA compiler
-    if [ -z "$GCC_HOST_COMPILER_PATH" ]; then
-        if   hash gcc-6 2>/dev/null && version_gt 6.4 `gcc-6 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-6"}
-        elif hash gcc-5 2>/dev/null && version_gt 5.5 `gcc-5 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-5"}
-        elif hash gcc-4 2>/dev/null && version_gt 4.9 `gcc-4 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-4"}
-        else
-            echo "No supported CUDA compiler available."
-            exit 1
-        fi
-    fi
-
     export CLANG_CUDA_COMPILER_PATH=${CLANG_CUDA_COMPILER_PATH:-"/usr/bin/clang"}
     export TF_CUDA_CLANG=${TF_CUDA_CLANG:-0}
 else
