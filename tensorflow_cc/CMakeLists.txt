@@ -10,8 +10,14 @@ project(
 option(TENSORFLOW_SHARED "Build shared library (required for GPU support)." OFF)
 option(TENSORFLOW_STATIC "Build static library." ON)
 set(TENSORFLOW_TAG "v1.8.0" CACHE STRING "The tensorflow release tag to be checked out (default v1.8.0).")
-set(ENV{GCC_HOST_COMPILER_PATH} "/usr/bin/gcc" CACHE STRING "Please specify which gcc should be used by nvcc as the host compiler (default: /usr/bin/gcc).")
+set(GCC_HOST_COMPILER_PATH "/usr/bin/gcc" CACHE STRING "Please specify which gcc should be used by nvcc as the host compiler (default: /usr/bin/gcc).")
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." OFF)
+
+# -------------
+# Tensorflow environment file
+# -------------
+file(WRITE "cmake/tensorflow_env.sh" "export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH}")
+
 
 # -------------
 # CMake Options

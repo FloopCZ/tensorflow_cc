@@ -14,9 +14,10 @@ ExternalProject_Add(
             # patch nsync to use g++-5
             COMMAND sed -i "s/ g++/ g++-5/g" tensorflow/contrib/makefile/compile_nsync.sh
             COMMAND tensorflow/contrib/makefile/compile_nsync.sh
+            COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/tensorflow_env.sh" .
             COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/build_tensorflow.sh" .
-            COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/copy_links.sh" .
-            COMMAND ./build_tensorflow.sh
+            COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/copy_links.sh" .            
+            COMMAND ./build_tensorflow.sh 
             COMMAND ./copy_links.sh .
   BUILD_COMMAND ""
   INSTALL_COMMAND ""

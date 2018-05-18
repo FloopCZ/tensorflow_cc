@@ -6,6 +6,9 @@ function version_gt {
     test "`printf '%s\n' "$@" | sort -V | head -n 1`" != "$1"
 }
 
+# Grab tensorflow environment set by cmake
+source tensorflow_env.sh
+
 # configure environmental variables
 export CC_OPT_FLAGS=${CC_OPT_FLAGS:-"-march=ivybridge"}
 export TF_NEED_GCP=${TF_NEED_GCP:-0}
@@ -69,6 +72,8 @@ else
     cuda_config_opts=""
     export TF_NEED_CUDA=0
 fi
+
+export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH}
 
 # configure and build
 ./configure
