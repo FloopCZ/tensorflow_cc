@@ -3,6 +3,12 @@ set -e
 # This file recursively traverses a directory and replaces each
 # link by a copy of its target.
 
+
+
+realpath() {
+    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
 echo "Replacing links with the copies of their targets."
 echo "This may take a while..."
 # To properly handle whitespace characters in filenames, we need to use
