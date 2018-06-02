@@ -20,6 +20,7 @@ done
 # install requirements
 pacman -Syu --noconfirm --needed \
   base-devel \
+  pacman-contrib \
   cmake \
   git \
   unzip \
