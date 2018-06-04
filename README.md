@@ -39,10 +39,10 @@ docker build -t floopcz/tensorflow_cc:ubuntu-shared -f Dockerfiles/ubuntu-shared
 
 #### 1) Install requirements
 
-##### Ubuntu 16.04+:
+##### Ubuntu 18.04:
 ```
 sudo apt-get install build-essential curl git cmake unzip autoconf autogen libtool mlocate zlib1g-dev \
-                     g++-5 python python3-numpy python3-dev python3-pip python3-wheel wget
+                     g++-7 python python3-numpy python3-dev python3-pip python3-wheel wget
 sudo updatedb
 ```
 
@@ -57,7 +57,7 @@ sudo updatedb
 For GPU support on Arch, also install the following:
 
 ```
-sudo pacman -S gcc54 bazel cuda cudnn nvidia
+sudo pacman -S gcc7 bazel cuda cudnn nvidia
 ```
 
 **Warning:** Newer versions of TensorFlow sometimes fail to build with the latest version of Bazel. You may wish

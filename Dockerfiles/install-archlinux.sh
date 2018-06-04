@@ -31,7 +31,7 @@ pacman -Syu --noconfirm --needed \
 
 if $shared; then
     pacman -S --noconfirm --needed \
-      gcc54 \
+      gcc7 \
       java-environment=8 \
       libarchive \
       protobuf \
