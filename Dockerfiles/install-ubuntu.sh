@@ -30,7 +30,7 @@ apt-get -y install \
   libtool \
   mlocate \
   zlib1g-dev \
-  g++-5 \
+  g++-7 \
   python \
   python3-numpy \
   python3-dev \
@@ -50,7 +50,7 @@ if $shared; then
 fi
 if $cuda; then
     # install libcupti
-    apt-get -y install cuda-command-line-tools-9-1
+    apt-get -y install cuda-command-line-tools-9-2
 fi
 
 apt-get -y clean

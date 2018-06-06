@@ -64,14 +64,20 @@ if [ -n "${CUDA_TOOLKIT_PATH}" ]; then
 
     # choose the right version of CUDA compiler
     if [ -z "$GCC_HOST_COMPILER_PATH" ]; then
-        if   hash gcc-6 2>/dev/null && version_gt 6.4 `gcc-6 -dumpversion`; then
+        if   hash gcc-7 2>/dev/null && version_gt 7.4 `gcc-7 -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-7"}
+        elif hash gcc-6 2>/dev/null && version_gt 6.4 `gcc-6 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-6"}
         elif hash gcc-5 2>/dev/null && version_gt 5.5 `gcc-5 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-5"}
         elif hash gcc-4 2>/dev/null && version_gt 4.9 `gcc-4 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-4"}
         else
-            echo "No supported CUDA compiler available."
+            echo "No supported CUDA compiler available. If you are sure your compiler"
+            echo "version is supported by your CUDA version, please run e.g.:"
+            echo "export GCC_HOST_COMPILER_PATH=/usr/bin/gcc"
+            echo "before the build. For the list of supported compilers refer to:"
+            echo "https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html"
             exit 1
         fi
     fi
