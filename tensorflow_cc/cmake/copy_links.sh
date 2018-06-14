@@ -14,7 +14,7 @@ find -L "$1" -depth -print0 |
         # the original when some of its parent directories were copied.
         # Also the first check is to detect whether the file (after
         # symlink dereference) exists so that `realpath` does not fail.
-        if [[ -e "$f" ]] && [[ -L "$f" ]]; then
+        if [[ -w "$f" ]] && [[ -L "$f" ]]; then
             realf="$(realpath "$f")"
             rm "$f"
             cp -r --link "$realf" "$f" 2>/dev/null || cp -r "$realf" "$f"
