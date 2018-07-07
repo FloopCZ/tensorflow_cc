@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 project(
   "tensorflow_cc"
-  VERSION 1.8.0
+  VERSION 1.9.0
 )
 
 # Static library with no GPU support is built by default.
@@ -9,7 +9,7 @@ project(
 # If enabled, bazel has to be installed.
 option(TENSORFLOW_SHARED "Build shared library (required for GPU support)." OFF)
 option(TENSORFLOW_STATIC "Build static library." ON)
-set(TENSORFLOW_TAG "v1.8.0" CACHE STRING "The tensorflow release tag to be checked out (default v1.8.0).")
+set(TENSORFLOW_TAG "v1.9.0-rc2" CACHE STRING "The tensorflow release tag to be checked out (default v1.9.0).")
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." OFF)
 
 # -------------
