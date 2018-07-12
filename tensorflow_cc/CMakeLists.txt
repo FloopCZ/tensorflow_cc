@@ -212,7 +212,7 @@ endif()
 # shared library specific
 if(TENSORFLOW_SHARED)
   install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_cc.so"
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/bin/tensorflow/libtensorflow_cc.so"
     DESTINATION lib/tensorflow_cc
   )
 endif()
