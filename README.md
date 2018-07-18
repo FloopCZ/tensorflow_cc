@@ -41,8 +41,8 @@ docker build -t floopcz/tensorflow_cc:ubuntu-shared -f Dockerfiles/ubuntu-shared
 
 ##### Ubuntu 18.04:
 ```
-sudo apt-get install build-essential curl git cmake unzip autoconf autogen libtool mlocate zlib1g-dev \
-                     g++-7 python python3-numpy python3-dev python3-pip python3-wheel wget
+sudo apt-get install build-essential curl git cmake unzip autoconf autogen automake libtool mlocate \
+                     zlib1g-dev g++-7 python python3-numpy python3-dev python3-pip python3-wheel wget
 sudo updatedb
 ```
 
