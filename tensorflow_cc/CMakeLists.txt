@@ -178,6 +178,12 @@ install(
   DESTINATION include/tensorflow
   FILES_MATCHING PATTERN "*.h"
 )
+#install the bazel generated files in the correct expected location
+install(
+  DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-genfiles/genfiles/tensorflow/"
+  DESTINATION include/tensorflow/tensorflow/
+  FILES_MATCHING PATTERN "*.h"
+)
 # install all header files downloaded by contrib/makefile
 # (Note that we cannot simply include all *.h or *.hpp files, since e.g., eigen
 # does not use file extensions for header files.)
@@ -212,7 +218,7 @@ endif()
 # shared library specific
 if(TENSORFLOW_SHARED)
   install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_cc.so"
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/bin/tensorflow/libtensorflow_cc.so"
     DESTINATION lib/tensorflow_cc
   )
 endif()
