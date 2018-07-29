@@ -62,6 +62,10 @@ if(TENSORFLOW_SHARED)
     tensorflow_cc_shared
     tensorflow_shared
   )
+  # For some reason, Bazel sometimes puts the headers into `bazel-genfiles/genfiles` and
+  # sometimes just to `bazel-genfiles`. So we just create and include both the directories.
+  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-genfiles/_placeholder.h" "")
+  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-genfiles/genfiles/_placeholder.h" "")
   target_include_directories(
     tensorflow_cc_shared INTERFACE
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow"
