@@ -8,6 +8,7 @@ project(
 # Use the following option to build a shared library with GPU support.
 # If enabled, bazel has to be installed.
 option(TENSORFLOW_SHARED "Build shared library (required for GPU support)." OFF)
+option(ALLOW_CUDA "When building the shared library, try to find and use CUDA." ON)
 option(TENSORFLOW_STATIC "Build static library." ON)
 set(TENSORFLOW_TAG "v1.9.0" CACHE STRING "The tensorflow release tag to be checked out (default v1.9.0).")
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." OFF)
@@ -21,6 +22,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 include(CMakePackageConfigHelpers)
 set(CMAKECFG_INSTALL_DIR lib/cmake/TensorflowCC)
+
+# Configure the build_tensorflow script.
+configure_file("cmake/build_tensorflow.sh.in" "build_tensorflow.sh" @ONLY)
 
 # --------------------------------------------------------
 # Include External Projects for Shared / Static Tensorflow
