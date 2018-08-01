@@ -51,7 +51,7 @@ elif [ -e /usr/include/cudnn.h ]; then
     export CUDNN_INSTALL_PATH=/usr
 fi
 
-if [ -n "${CUDA_TOOLKIT_PATH}" ]; then
+if [ "@ALLOW_CUDA@" = "ON" ] && [ -n "${CUDA_TOOLKIT_PATH}" ]; then
     if [[ -z "${CUDNN_INSTALL_PATH}" ]]; then
         echo "CUDA found but no cudnn.h found. Please install cuDNN."
         exit 1

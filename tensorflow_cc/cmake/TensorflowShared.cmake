@@ -14,10 +14,8 @@ ExternalProject_Add(
             # patch nsync to use g++-7
             COMMAND sed -i "s/ g++/ g++-7/g" tensorflow/contrib/makefile/compile_nsync.sh
             COMMAND tensorflow/contrib/makefile/compile_nsync.sh
-            COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/build_tensorflow.sh" .
-            COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/copy_links.sh" .
-            COMMAND ./build_tensorflow.sh
-            COMMAND ./copy_links.sh .
+            COMMAND "${CMAKE_CURRENT_BINARY_DIR}/build_tensorflow.sh"
+            COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/cmake/copy_links.sh" .
             # For some reason, Bazel sometimes puts the headers into
             # `bazel-genfiles/genfiles` and sometimes just to `bazel-genfiles`.
             # So we just create and include both the directories.
