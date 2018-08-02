@@ -16,6 +16,12 @@ ExternalProject_Add(
             COMMAND tensorflow/contrib/makefile/compile_nsync.sh
             COMMAND "${CMAKE_CURRENT_BINARY_DIR}/build_tensorflow.sh"
             COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/cmake/copy_links.sh" .
+            # For some reason, Bazel sometimes puts the headers into
+            # `bazel-genfiles/genfiles` and sometimes just to `bazel-genfiles`.
+            # So we just create and include both the directories.
+            COMMAND mkdir -p bazel-genfiles/genfiles
+            COMMAND touch bazel-genfiles/_placeholder.h
+            COMMAND touch bazel-genfiles/genfiles/_placeholder.h
   BUILD_COMMAND ""
   INSTALL_COMMAND ""
 )

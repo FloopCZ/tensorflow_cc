@@ -36,6 +36,7 @@ apt-get -y install \
   python3-dev \
   python3-pip \
   python3-wheel \
+  sudo \
   wget
 
 if $shared; then

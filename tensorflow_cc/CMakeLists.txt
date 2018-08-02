@@ -70,6 +70,7 @@ if(TENSORFLOW_SHARED)
     tensorflow_cc_shared INTERFACE
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/bazel-genfiles"
+    "${CMAKE_INSTALL_PREFIX}/include/tensorflow/bazel-genfiles/genfiles"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/eigen"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/downloads/gemmlowp"
@@ -218,6 +219,12 @@ if(TENSORFLOW_SHARED)
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_cc.so"
     DESTINATION lib/tensorflow_cc
+    OPTIONAL
+  )
+  install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/bin/tensorflow/libtensorflow_cc.so"
+    DESTINATION lib/tensorflow_cc
+    OPTIONAL
   )
 endif()
 # static library specific
