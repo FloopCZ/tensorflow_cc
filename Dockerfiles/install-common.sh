@@ -32,13 +32,13 @@ cd tensorflow_cc/tensorflow_cc/build
 
 # configure only shared or only static library
 if $shared; then
-    unpriv-run cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..;
+    cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..;
 else
-    unpriv-run cmake ..;
+    cmake ..;
 fi
 
 # build and install
-unpriv-run make
+make
 rm -rf /home/tensorflow_cc/.cache
 make install
 cd "$cwd"
@@ -50,9 +50,9 @@ mkdir tensorflow_cc/example/build
 chown -R tensorflow_cc:tensorflow_cc tensorflow_cc/example/build
 chmod go+rX tensorflow_cc/example/build
 cd tensorflow_cc/example/build
-unpriv-run cmake ..
-unpriv-run make
-unpriv-run ./example
+cmake ..
+make
+./example
 
 ### delete the unprivileged user
 chown -R root:root /tensorflow_cc
