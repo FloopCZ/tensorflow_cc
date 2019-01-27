@@ -47,7 +47,11 @@ fi
 if $cuda; then
     pacman -S --noconfirm --needed \
       cuda \
-      cudnn
+      cudnn \
+      nccl
+    rm -vf /usr/bin/nvidia*
+    rm -vf /usr/lib/libnvidia*
+    rm -vf /usr/lib/libcuda*
 fi
 
 paccache -rfk0
