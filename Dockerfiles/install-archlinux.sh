@@ -49,9 +49,6 @@ if $cuda; then
       cuda \
       cudnn \
       nccl
-    rm -vf /usr/bin/nvidia*
-    rm -vf /usr/lib/libnvidia*
-    rm -vf /usr/lib/libcuda*
 fi
 
 paccache -rfk0
@@ -61,3 +58,10 @@ updatedb
 
 # build and install tensorflow_cc
 ./tensorflow_cc/Dockerfiles/install-common.sh "$@"
+
+# cleanup installed cuda libraries (will be provided by nvidia-docker)
+if $cuda; then
+    rm -vf /usr/bin/nvidia*
+    rm -vf /usr/lib/libnvidia*
+    rm -vf /usr/lib/libcuda*
+fi
