@@ -28,7 +28,6 @@ The list of available images:
 | `floopcz/tensorflow_cc:ubuntu-shared`         | Ubuntu + shared build of `tensorflow_cc`                   |
 | `floopcz/tensorflow_cc:ubuntu-shared-cuda`    | Ubuntu + shared build of `tensorflow_cc` + NVIDIA CUDA     |
 | `floopcz/tensorflow_cc:archlinux-shared`      | Arch Linux + shared build of `tensorflow_cc`               |
-| `floopcz/tensorflow_cc:archlinux-shared-cuda` | Arch Linux + shared build of `tensorflow_cc` + NVIDIA CUDA |
 
 To build one of the images yourself, e.g. `ubuntu-shared`, run:
 ```bash
