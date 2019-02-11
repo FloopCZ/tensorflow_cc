@@ -1,4 +1,4 @@
-FROM archimg/base-devel
+FROM archlinux/base
 
 # copy the contents of this repository to the container
 COPY . tensorflow_cc
