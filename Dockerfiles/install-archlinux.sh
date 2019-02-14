@@ -20,7 +20,6 @@ done
 # install requirements
 pacman -Syu --noconfirm --needed \
   base-devel \
-  pacman-contrib \
   cmake \
   git \
   unzip \
@@ -50,8 +49,6 @@ if $cuda; then
       cudnn \
       nccl
 fi
-
-paccache -rfk0
 
 # when building TF with Intel MKL support, `locate` database needs to exist
 updatedb
