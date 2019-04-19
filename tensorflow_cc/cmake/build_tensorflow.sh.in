@@ -68,7 +68,9 @@ if [ "@ALLOW_CUDA@" = "ON" ] && [ -n "${CUDA_TOOLKIT_PATH}" ]; then
 
     # choose the right version of CUDA compiler
     if [ -z "$GCC_HOST_COMPILER_PATH" ]; then
-        if   hash gcc-7 2>/dev/null && version_gt 7.5 `gcc-7 -dumpversion`; then
+        if   hash gcc 2>/dev/null && version_gt 8.5 `gcc -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc"}
+        elif hash gcc-7 2>/dev/null && version_gt 7.5 `gcc-7 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-7"}
         elif hash gcc-6 2>/dev/null && version_gt 6.4 `gcc-6 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-6"}
