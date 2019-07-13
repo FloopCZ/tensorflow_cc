@@ -10,7 +10,7 @@ project(
 option(TENSORFLOW_SHARED "Build shared library (required for GPU support)." OFF)
 option(ALLOW_CUDA "When building the shared library, try to find and use CUDA." ON)
 option(TENSORFLOW_STATIC "Build static library." ON)
-set(TENSORFLOW_TAG "v1.14.0" CACHE STRING "The tensorflow release tag to be checked out (default v1.14.0).")
+set(TENSORFLOW_TAG "3cb03d093610e51cf2d36bfbf43c446a5de52941" CACHE STRING "The tensorflow release tag to be checked out (default v1.14.0).")
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." OFF)
 
 # -------------
