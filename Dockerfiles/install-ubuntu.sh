@@ -51,7 +51,7 @@ if $shared; then
 fi
 if $cuda; then
     # install libcupti
-    apt-get -y install cuda-command-line-tools-10-0
+    apt-get -y install libnccl-dev cuda-command-line-tools-10-1
 fi
 
 apt-get -y clean
