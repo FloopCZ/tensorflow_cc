@@ -60,7 +60,7 @@ sudo pacman -S gcc7 bazel cuda cudnn nvidia
 ```
 
 **Warning:** Newer versions of TensorFlow sometimes fail to build with the latest version of Bazel. You may wish
-to install an older version of Bazel (e.g., 0.16.1).
+to install an older version of Bazel (e.g., 0.26.1).
 
 #### 2) Clone this repository
 ```
