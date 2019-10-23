@@ -79,7 +79,7 @@ if(TENSORFLOW_SHARED)
   )
   target_link_libraries(
     tensorflow_cc_shared INTERFACE
-    "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow_cc.so"
+    "${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so"
     dl pthread
   )
   if(SYSTEM_PROTOBUF)
@@ -220,13 +220,20 @@ endif()
 if(TENSORFLOW_SHARED)
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_cc.so"
-    DESTINATION lib/tensorflow_cc
+    DESTINATION lib
     OPTIONAL
   )
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/bin/tensorflow/libtensorflow_cc.so"
-    DESTINATION lib/tensorflow_cc
+    DESTINATION lib
     OPTIONAL
+  )
+  # Make versioned symlinks to the library
+  install(CODE "execute_process(                          \
+    COMMAND ${CMAKE_COMMAND} -E create_symlink            \
+      ${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so     \
+      ${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so.1   \
+    )"
   )
 endif()
 # static library specific
