@@ -42,7 +42,7 @@ make
 rm -rf /home/tensorflow_cc/.cache
 make install
 cd "$cwd"
-rm -rf tensorflow_cc/tensorflow_cc/build
+# rm -rf tensorflow_cc/tensorflow_cc/build
 
 ### build and run example ###
 
