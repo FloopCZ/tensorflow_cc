@@ -204,6 +204,12 @@ install(
                  PATTERN "*.tar.*"    EXCLUDE
                  PATTERN "*.zip"      EXCLUDE
 )
+# install all the *.inc files
+install(
+  DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/gen/"
+  DESTINATION include/tensorflow/tensorflow/contrib/makefile/gen
+  FILES_MATCHING PATTERN "*.inc"
+)
 # install all files from third_party folder (e.g., Eigen/Tensor)
 install(
   DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/third_party/"
