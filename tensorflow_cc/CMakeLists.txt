@@ -237,7 +237,7 @@ if(TENSORFLOW_SHARED)
   # Make versioned symlinks to the library
   install(CODE "execute_process(                          \
     COMMAND ${CMAKE_COMMAND} -E create_symlink            \
-      ${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so     \
+      libtensorflow_cc.so                                 \
       ${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so.1   \
     )"
   )
