@@ -11,7 +11,8 @@ ExternalProject_Add(
   DOWNLOAD_COMMAND ""
   UPDATE_COMMAND ""
             # The grpc integrated in v1.15.0 needs patching, see https://github.com/clearlinux/distribution/issues/1151.
-  CONFIGURE_COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/patches/rename-gettid-functions.patch" third_party/
+  CONFIGURE_COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/patches/Rename-gettid-functions.patch" .
+            COMMAND git apply Rename-gettid-functions.patch
             COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/patches/workspace.bzl.patch" .
             COMMAND git apply workspace.bzl.patch
             COMMAND tensorflow/contrib/makefile/compile_linux_protobuf.sh

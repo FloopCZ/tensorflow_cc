@@ -81,5 +81,3 @@ index 00000000..90bd9115
 + #endif
 +   if (GRPC_TRACE_FLAG_ENABLED(grpc_polling_trace)) {
 +     gpr_log(GPR_INFO,
--- 
-2.22.0
