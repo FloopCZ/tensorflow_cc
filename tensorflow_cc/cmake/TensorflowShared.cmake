@@ -10,7 +10,11 @@ ExternalProject_Add(
   BUILD_IN_SOURCE 1
   DOWNLOAD_COMMAND ""
   UPDATE_COMMAND ""
-  CONFIGURE_COMMAND tensorflow/contrib/makefile/compile_linux_protobuf.sh
+            # The grpc integrated in v1.15.0 needs patching, see https://github.com/clearlinux/distribution/issues/1151.
+  CONFIGURE_COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/patches/rename-gettid-functions.patch" third_party/
+            COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/patches/workspace.bzl.patch" .
+            COMMAND git apply workspace.bzl.patch
+            COMMAND tensorflow/contrib/makefile/compile_linux_protobuf.sh
             # Do not fail on warnings when building nsync
             COMMAND sed -i "s/ -Werror//g" tensorflow/contrib/makefile/compile_nsync.sh
             COMMAND tensorflow/contrib/makefile/compile_nsync.sh
