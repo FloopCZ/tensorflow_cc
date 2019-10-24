@@ -79,5 +79,5 @@ index 00000000..90bd9115
 +-  WORKER_PTR->originator = gettid();
 ++  WORKER_PTR->originator = sys_gettid();
 + #endif
-+   if (GRPC_TRACE_FLAG_ENABLED(grpc_polling_trace)) {
++   if (grpc_polling_trace.enabled()) {
 +     gpr_log(GPR_INFO,
