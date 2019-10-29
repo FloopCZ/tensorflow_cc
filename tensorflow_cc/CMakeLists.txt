@@ -226,12 +226,14 @@ endif()
 if(TENSORFLOW_SHARED)
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_cc.so"
-    DESTINATION lib/libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}
+    DESTINATION lib
+    RENAME libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}
     OPTIONAL
   )
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/bin/tensorflow/libtensorflow_cc.so"
-    DESTINATION lib/libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}
+    DESTINATION lib
+    RENAME libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}
     OPTIONAL
   )
   # Make versioned symlinks to the library
