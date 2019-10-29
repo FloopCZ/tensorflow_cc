@@ -1,4 +1,4 @@
-FROM archlinux/base
+FROM archlinux:latest
 
 # copy the contents of this repository to the container
 COPY . tensorflow_cc
