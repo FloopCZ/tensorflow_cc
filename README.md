@@ -1,6 +1,6 @@
 # tensorflow_cc
 [![Build Status](http://ash.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://ash.floop.cz:8080/job/tensorflow_cc/)
-[![TF version](https://img.shields.io/badge/TF%20version-1.13.1-brightgreen.svg)]()
+[![TF version](https://img.shields.io/badge/TF%20version-1.15.0-brightgreen.svg)]()
 
 This repository makes possible the usage of the [TensorFlow C++](https://www.tensorflow.org/api_docs/cc/) API from the outside of the TensorFlow source code folders and without the use of the [Bazel](https://bazel.build/) build system.
 
@@ -60,7 +60,7 @@ sudo pacman -S gcc7 bazel cuda cudnn nvidia
 ```
 
 **Warning:** Newer versions of TensorFlow sometimes fail to build with the latest version of Bazel. You may wish
-to install an older version of Bazel (e.g., 0.16.1).
+to install an older version of Bazel (e.g., 0.26.1).
 
 #### 2) Clone this repository
 ```

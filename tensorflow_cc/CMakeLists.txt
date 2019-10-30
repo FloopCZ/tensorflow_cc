@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 project(
   "tensorflow_cc"
-  VERSION 1.13.1
+  VERSION 1.15.0
 )
 
 # Static library with no GPU support is built by default.
@@ -10,7 +10,7 @@ project(
 option(TENSORFLOW_SHARED "Build shared library (required for GPU support)." OFF)
 option(ALLOW_CUDA "When building the shared library, try to find and use CUDA." ON)
 option(TENSORFLOW_STATIC "Build static library." ON)
-set(TENSORFLOW_TAG "v1.13.1" CACHE STRING "The tensorflow release tag to be checked out (default v1.13.1).")
+set(TENSORFLOW_TAG "v1.15.0" CACHE STRING "The tensorflow release tag to be checked out (default v1.15.0).")
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." OFF)
 
 # -------------
@@ -79,7 +79,7 @@ if(TENSORFLOW_SHARED)
   )
   target_link_libraries(
     tensorflow_cc_shared INTERFACE
-    "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow_cc.so"
+    "${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}"
     dl pthread
   )
   if(SYSTEM_PROTOBUF)
@@ -204,6 +204,12 @@ install(
                  PATTERN "*.tar.*"    EXCLUDE
                  PATTERN "*.zip"      EXCLUDE
 )
+# install all the *.inc files
+install(
+  DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/gen/"
+  DESTINATION include/tensorflow/tensorflow/contrib/makefile/gen
+  FILES_MATCHING PATTERN "*.inc"
+)
 # install all files from third_party folder (e.g., Eigen/Tensor)
 install(
   DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/third_party/"
@@ -220,13 +226,22 @@ endif()
 if(TENSORFLOW_SHARED)
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_cc.so"
-    DESTINATION lib/tensorflow_cc
+    DESTINATION lib
+    RENAME libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}
     OPTIONAL
   )
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/bin/tensorflow/libtensorflow_cc.so"
-    DESTINATION lib/tensorflow_cc
+    DESTINATION lib
+    RENAME libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}
     OPTIONAL
+  )
+  # Make versioned symlinks to the library
+  install(CODE "execute_process(                          \
+    COMMAND ${CMAKE_COMMAND} -E create_symlink            \
+      libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}        \
+      ${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so     \
+    )"
   )
 endif()
 # static library specific
