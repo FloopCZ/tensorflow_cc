@@ -12,6 +12,7 @@ option(ALLOW_CUDA "When building the shared library, try to find and use CUDA." 
 option(TENSORFLOW_STATIC "Build static library." ON)
 set(TENSORFLOW_TAG "v1.15.0" CACHE STRING "The tensorflow release tag to be checked out (default v1.15.0).")
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." OFF)
+set(TARGET_CXX_STANDARD "cxx_std_11" CACHE STRING "C++ standard to be enforced when linking to TensorflowCC targets (e.g., cxx_std_11).")
 
 # -------------
 # CMake Options
@@ -22,6 +23,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 include(CMakePackageConfigHelpers)
 set(CMAKECFG_INSTALL_DIR lib/cmake/TensorflowCC)
+
+set_property(CACHE TARGET_CXX_STANDARD PROPERTY STRINGS
+    "cxx_std_11" "cxx_std_14" "cxx_std_17" "cxx_std_20")
 
 # Configure the build_tensorflow script.
 configure_file("cmake/build_tensorflow.sh.in" "build_tensorflow.sh" @ONLY)
@@ -58,10 +62,8 @@ endif()
 
 if(TENSORFLOW_SHARED)
   add_library(tensorflow_cc_shared INTERFACE)
-  target_compile_options(
-    tensorflow_cc_shared INTERFACE
-    "$<$<COMPILE_LANGUAGE:CXX>:-std=c++11>"
-  )
+  target_compile_features(tensorflow_cc_shared INTERFACE ${TARGET_CXX_STANDARD})
+
   add_dependencies(
     tensorflow_cc_shared
     tensorflow_shared
@@ -109,10 +111,8 @@ endif()
 
 if(TENSORFLOW_STATIC)
   add_library(tensorflow_cc_static INTERFACE)
-  target_compile_options(
-    tensorflow_cc_static INTERFACE
-    "$<$<COMPILE_LANGUAGE:CXX>:-std=c++11>"
-  )
+  target_compile_features(tensorflow_cc_static INTERFACE ${TARGET_CXX_STANDARD})
+
   add_dependencies(
     tensorflow_cc_static
     tensorflow_static
