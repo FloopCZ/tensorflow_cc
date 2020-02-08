@@ -33,7 +33,25 @@ export PYTHON_BIN_PATH=${PYTHON_BIN_PATH:-"$(which python3)"}
 export PYTHON_LIB_PATH="$($PYTHON_BIN_PATH -c 'import site; print(site.getsitepackages()[0])')"
 
 # check if cuda support requested and supported
-if [ "@ALLOW_CUDA@" = "ON" ] && hash nvcc 2>/dev/null; then
+cuda_available=false
+if hash nvcc 2>/dev/null; then
+   cuda_available=true
+fi
+
+cuda_allowed=false
+if [ "@ALLOW_CUDA@" = "ON" ]; then
+    cuda_allowed=true
+fi
+
+if [ "@REQUIRE_CUDA@" = "ON" ];  then
+    cuda_allowed=true
+    if [ "$cuda_available" != true ]; then
+        echo "CUDA support is required but not available in the system (nvcc not found)"
+        exit 1
+    fi
+fi
+
+if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
     echo "CUDA support enabled"
     cuda_config_opts="--config=cuda"
     export TF_NEED_CUDA=1
