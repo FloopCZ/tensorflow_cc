@@ -21,11 +21,11 @@ cd tensorflow_cc/tensorflow_cc/build
 # build and install
 cmake ..
 make
-# rm -rf /home/tensorflow_cc/.cache
-# rm -rf /root/.cache
+rm -rf /home/tensorflow_cc/.cache
+rm -rf /root/.cache
 make install
 cd "$cwd"
-# rm -rf tensorflow_cc/tensorflow_cc/build
+rm -rf tensorflow_cc/tensorflow_cc/build
 
 ### build and run example ###
 
