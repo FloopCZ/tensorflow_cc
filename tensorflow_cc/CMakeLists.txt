@@ -1,13 +1,15 @@
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
+file(READ "PROJECT_VERSION" version)
 project(
   "tensorflow_cc"
-  VERSION 2.2.0
+  VERSION "${version}"
 )
 
 # If enabled, bazel has to be installed.
 option(ALLOW_CUDA "Try to find and use CUDA." ON)
 option(REQUIRE_CUDA "Make sure to find and use CUDA (implies ALLOW_CUDA)." OFF)
 set(TENSORFLOW_TAG "v2.2.0-rc0" CACHE STRING "The tensorflow release tag to be checked out (default v2.2.0-rc0).")
+# TODO use ${version} when not -rc0
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." OFF)
 set(TARGET_CXX_STANDARD "cxx_std_11" CACHE STRING "C++ standard to be enforced when linking to TensorflowCC targets (e.g., cxx_std_11).")
 
