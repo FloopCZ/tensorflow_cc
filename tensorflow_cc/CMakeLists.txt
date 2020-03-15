@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
-file(READ "PROJECT_VERSION" version)
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/PROJECT_VERSION" version)
 project(
   "tensorflow_cc"
   VERSION "${version}"

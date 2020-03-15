@@ -35,7 +35,7 @@ apt-get -y install \
   wget
 
 # install bazel
-export BAZEL_VERSION=${BAZEL_VERSION:-`cat ./tensorflow_cc/BAZEL_VERSION`}
+export BAZEL_VERSION=${BAZEL_VERSION:-`cat ./tensorflow_cc/Dockerfiles/BAZEL_VERSION`}
 apt-get -y install pkg-config zip g++ zlib1g-dev unzip python
 bazel_installer=bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh
 wget -P /tmp https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${bazel_installer}
