@@ -2,18 +2,6 @@
 set -e
 cwd="`pwd`"
 
-### parse command line arguments ###
-
-shared=false
-
-for key in "$@"; do
-    case $key in
-        --shared)
-        shared=true
-        ;;
-    esac
-done
-
 ### prepare an unprivileged user
 
 groupadd -r tensorflow_cc
@@ -30,19 +18,14 @@ chown -R tensorflow_cc:tensorflow_cc tensorflow_cc/tensorflow_cc/build
 chmod go+rX tensorflow_cc/tensorflow_cc/build
 cd tensorflow_cc/tensorflow_cc/build
 
-# configure only shared or only static library
-if $shared; then
-    cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..;
-else
-    cmake ..;
-fi
-
 # build and install
+cmake ..
 make
-rm -rf /home/tensorflow_cc/.cache
+# rm -rf /home/tensorflow_cc/.cache
+# rm -rf /root/.cache
 make install
 cd "$cwd"
-rm -rf tensorflow_cc/tensorflow_cc/build
+# rm -rf tensorflow_cc/tensorflow_cc/build
 
 ### build and run example ###
 

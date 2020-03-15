@@ -1,6 +1,6 @@
 # tensorflow_cc
 [![Build Status](http://ash.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://ash.floop.cz:8080/job/tensorflow_cc/)
-[![TF version](https://img.shields.io/badge/TF%20version-1.15.0-brightgreen.svg)]()
+[![TF version](https://img.shields.io/badge/TF%20version-2.2.0-rc0-brightgreen.svg)]()
 
 This repository makes possible the usage of the [TensorFlow C++](https://www.tensorflow.org/api_docs/cc/) API from the outside of the TensorFlow source code folders and without the use of the [Bazel](https://bazel.build/) build system.
 
@@ -12,26 +12,25 @@ If you wish to start using this project right away, fetch a prebuilt image on [D
 
 Running the image on CPU:
 ```bash
-docker run -it floopcz/tensorflow_cc:ubuntu-shared /bin/bash
+docker run -it floopcz/tensorflow_cc:ubuntu /bin/bash
 ```
 
 If you also want to utilize your NVIDIA GPU, install [NVIDIA Docker](https://github.com/NVIDIA/nvidia-docker) and run:
 ```bash
-docker run --runtime=nvidia -it floopcz/tensorflow_cc:ubuntu-shared-cuda /bin/bash
+docker run --runtime=nvidia -it floopcz/tensorflow_cc:ubuntu-cuda /bin/bash
 ```
 
 The list of available images:
 
 | Image name                                    | Description                                                |
 | ---                                           | ---                                                        |
-| `floopcz/tensorflow_cc:ubuntu-static`         | Ubuntu + static build of `tensorflow_cc`                   |
-| `floopcz/tensorflow_cc:ubuntu-shared`         | Ubuntu + shared build of `tensorflow_cc`                   |
-| `floopcz/tensorflow_cc:ubuntu-shared-cuda`    | Ubuntu + shared build of `tensorflow_cc` + NVIDIA CUDA     |
-| `floopcz/tensorflow_cc:archlinux-shared`      | Arch Linux + shared build of `tensorflow_cc`               |
+| `floopcz/tensorflow_cc:ubuntu`                | Ubuntu build of `tensorflow_cc`                            |
+| `floopcz/tensorflow_cc:ubuntu-cuda`           | Ubuntu build of `tensorflow_cc` + NVIDIA CUDA              |
+| `floopcz/tensorflow_cc:archlinux`             | Arch Linux build of `tensorflow_cc`                        |
 
-To build one of the images yourself, e.g. `ubuntu-shared`, run:
+To build one of the images yourself, e.g. `ubuntu`, run:
 ```bash
-docker build -t floopcz/tensorflow_cc:ubuntu-shared -f Dockerfiles/ubuntu-shared .
+docker build -t floopcz/tensorflow_cc:ubuntu -f Dockerfiles/ubuntu .
 ```
 
 ## Installation
@@ -45,7 +44,7 @@ sudo apt-get install build-essential curl git cmake unzip autoconf autogen autom
 sudo updatedb
 ```
 
-If you require GPU support on Ubuntu, please also install [Bazel](https://bazel.build/), NVIDIA CUDA Toolkit (>=9.2), NVIDIA drivers, cuDNN, and `cuda-command-line-tools` package. The tensorflow build script will automatically detect CUDA if it is installed in `/opt/cuda` or `/usr/local/cuda` directories.
+If you require GPU support on Ubuntu, please also install [Bazel](https://bazel.build/), NVIDIA CUDA Toolkit (>=10.1), NVIDIA drivers, cuDNN, and `cuda-command-line-tools` package. The tensorflow build script will automatically detect CUDA if it is installed in `/opt/cuda` or `/usr/local/cuda` directories.
 
 ##### Arch Linux:
 ```
@@ -60,7 +59,7 @@ sudo pacman -S gcc7 bazel cuda cudnn nvidia
 ```
 
 **Warning:** Newer versions of TensorFlow sometimes fail to build with the latest version of Bazel. You may wish
-to install an older version of Bazel (e.g., 0.26.1).
+to install an older version of Bazel (e.g., 2.0.0).
 
 #### 2) Clone this repository
 ```
@@ -70,26 +69,12 @@ cd tensorflow_cc
 
 #### 3) Build and install the library
 
-There are two possible ways to build the TensorFlow C++ library:
-1. As a __static library__ (default):
-    - Faster to build.
-    - Provides only basic functionality, just enough for inferring using an existing network
-      (see [contrib/makefile](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/makefile)).
-    - No GPU support.
-2. As a __shared library__:
-    - Requires [Bazel](https://bazel.build/).
-    - Slower to build.
-    - Provides the full TensorFlow C++ API.
-    - GPU support.
-
 ```
 cd tensorflow_cc
 mkdir build && cd build
-# for static library only:
 cmake ..
-# for shared library only (requires Bazel):
-# cmake -DTENSORFLOW_STATIC=OFF -DTENSORFLOW_SHARED=ON ..
-make && sudo make install
+make
+sudo make install
 ```
 
 **Warning:** Optimizations for Intel CPU generation `>=ivybridge` are enabled by default. If you have a
@@ -137,13 +122,10 @@ int main()
 find_package(TensorflowCC REQUIRED)
 add_executable(example example.cpp)
 
-# Link the static Tensorflow library.
-target_link_libraries(example TensorflowCC::Static)
+# Link the Tensorflow library.
+target_link_libraries(example TensorflowCC::TensorflowCC)
 
-# Altenatively, link the shared Tensorflow library.
-# target_link_libraries(example TensorflowCC::Shared)
-
-# For shared library setting, you may also link cuda if it is available.
+# You may also link cuda if it is available.
 # find_package(CUDA)
 # if(CUDA_FOUND)
 #   target_link_libraries(example ${CUDA_LIBRARIES})
@@ -158,4 +140,4 @@ cmake .. && make
 ```
 
 If you are still unsure, consult the Dockerfiles for
-[Ubuntu](Dockerfiles/ubuntu-shared) and [Arch Linux](Dockerfiles/archlinux-shared).
+[Ubuntu](Dockerfiles/ubuntu) and [Arch Linux](Dockerfiles/archlinux).
