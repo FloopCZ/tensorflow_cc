@@ -41,6 +41,9 @@ if $cuda; then
       cuda \
       cudnn \
       nccl
+    rm -vf /usr/bin/nvidia*
+    rm -vf /usr/lib/libnvidia*
+    rm -vf /usr/lib/libcuda*
 fi
 
 # when building TF with Intel MKL support, `locate` database needs to exist
