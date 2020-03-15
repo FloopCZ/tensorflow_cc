@@ -22,11 +22,12 @@ docker run --runtime=nvidia -it floopcz/tensorflow_cc:ubuntu-cuda /bin/bash
 
 The list of available images:
 
-| Image name                                    | Description                                                |
-| ---                                           | ---                                                        |
-| `floopcz/tensorflow_cc:ubuntu`                | Ubuntu build of `tensorflow_cc`                            |
-| `floopcz/tensorflow_cc:ubuntu-cuda`           | Ubuntu build of `tensorflow_cc` + NVIDIA CUDA              |
-| `floopcz/tensorflow_cc:archlinux`             | Arch Linux build of `tensorflow_cc`                        |
+| Image name                                    | Description                                         |
+| ---                                           | ---                                                 |
+| `floopcz/tensorflow_cc:ubuntu`                | Ubuntu build of `tensorflow_cc`                     |
+| `floopcz/tensorflow_cc:ubuntu-cuda`           | Ubuntu build of `tensorflow_cc` + NVIDIA CUDA       |
+| `floopcz/tensorflow_cc:archlinux`             | Arch Linux build of `tensorflow_cc`                 |
+| `floopcz/tensorflow_cc:archlinux-cuda`        | Arch Linux build of `tensorflow_cc` + NVIDIA CUDA   |
 
 To build one of the images yourself, e.g. `ubuntu`, run:
 ```bash
