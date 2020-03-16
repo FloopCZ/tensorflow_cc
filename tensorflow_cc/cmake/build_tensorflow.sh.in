@@ -96,5 +96,6 @@ fi
 bazel build --config=opt \
             --config=monolithic \
             $cuda_config_opts \
-            tensorflow:libtensorflow_cc.so
+            tensorflow:libtensorflow_cc.so \
+            tensorflow:install_headers
 bazel shutdown
