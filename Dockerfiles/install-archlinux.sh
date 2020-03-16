@@ -41,6 +41,11 @@ if $cuda; then
       cuda \
       cudnn \
       nccl
+    rm -rvf /opt/cuda/doc/
+    rm -rvf /opt/cuda/extras/
+    rm -rvf /opt/cuda/*nsight*
+    rm -rvf /opt/cuda/*nvvp*
+    rm -rvf /opt/cuda/samples/
     source /etc/profile.d/cuda.sh
 fi
 
@@ -55,11 +60,6 @@ if $cuda; then
     rm -vf /usr/bin/nvidia*
     rm -vf /usr/lib/libnvidia*
     rm -vf /usr/lib/libcuda*
-    rm -rvf /opt/cuda/doc/
-    rm -rvf /opt/cuda/extras/
-    rm -rvf /opt/cuda/*nsight*
-    rm -rvf /opt/cuda/*nvvp*
-    rm -rvf /opt/cuda/samples/
 fi
 
 # cleanup packages
