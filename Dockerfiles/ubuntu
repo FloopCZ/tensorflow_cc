@@ -6,4 +6,4 @@ COPY . tensorflow_cc
 # RUN git clone https://github.com/FloopCZ/tensorflow_cc.git
 
 # build and install
-RUN ./tensorflow_cc/Dockerfiles/install-ubuntu.sh --shared
+RUN ./tensorflow_cc/Dockerfiles/install-ubuntu.sh

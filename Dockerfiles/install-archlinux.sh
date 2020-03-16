@@ -24,7 +24,7 @@ pacman -Syu --noconfirm --needed \
   wget
 
 pacman -S --noconfirm --needed \
-  java-environment=8 \
+  jdk11-openjdk \
   libarchive \
   protobuf \
   unzip \
@@ -41,6 +41,7 @@ if $cuda; then
       cuda \
       cudnn \
       nccl
+    source /etc/profile.d/cuda.sh
 fi
 
 # when building TF with Intel MKL support, `locate` database needs to exist
@@ -54,4 +55,15 @@ if $cuda; then
     rm -vf /usr/bin/nvidia*
     rm -vf /usr/lib/libnvidia*
     rm -vf /usr/lib/libcuda*
+    rm -rvf /opt/cuda/doc/
+    rm -rvf /opt/cuda/extras/
+    rm -rvf /opt/cuda/*nsight*
+    rm -rvf /opt/cuda/*nvvp*
+    rm -rvf /opt/cuda/samples/
 fi
+
+# cleanup packages
+rm -rvf /usr/local/lib/bazel/
+rm -vf /usr/local/bin/bazel
+pacman --noconfirm -R jdk11-openjdk python python-numpy
+pacman --noconfirm -Rns $(pacman -Qtdq)
