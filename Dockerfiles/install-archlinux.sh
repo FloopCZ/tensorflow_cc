@@ -17,16 +17,14 @@ pacman -Syu --noconfirm --needed \
   base-devel \
   cmake \
   git \
-  unzip \
-  mlocate \
   python \
   python-numpy \
   wget
 
+# install Bazel
 pacman -S --noconfirm --needed \
   jdk11-openjdk \
   libarchive \
-  protobuf \
   unzip \
   zip
 export BAZEL_VERSION=${BAZEL_VERSION:-`cat ./tensorflow_cc/Dockerfiles/BAZEL_VERSION`}
@@ -42,15 +40,11 @@ if $cuda; then
       cudnn \
       nccl
     rm -rvf /opt/cuda/doc/
-    rm -rvf /opt/cuda/extras/
     rm -rvf /opt/cuda/*nsight*
     rm -rvf /opt/cuda/*nvvp*
     rm -rvf /opt/cuda/samples/
     source /etc/profile.d/cuda.sh
 fi
-
-# when building TF with Intel MKL support, `locate` database needs to exist
-updatedb
 
 # build and install tensorflow_cc
 ./tensorflow_cc/Dockerfiles/install-common.sh "$@"

@@ -15,22 +15,11 @@ done
 # install requirements
 apt-get -y update
 apt-get -y install \
-  build-essential \
-  curl \
-  git \
   cmake \
-  unzip \
-  autoconf \
-  autogen \
-  libtool \
-  mlocate \
-  zlib1g-dev \
   g++-7 \
-  python \
-  python3-numpy \
+  git \
   python3-dev \
-  python3-pip \
-  python3-wheel \
+  python3-numpy \
   sudo \
   wget
 
@@ -49,9 +38,6 @@ if $cuda; then
 fi
 
 apt-get -y clean
-
-# when building TF with Intel MKL support, `locate` database needs to exist
-updatedb
 
 # build and install tensorflow_cc
 ./tensorflow_cc/Dockerfiles/install-common.sh "$@"

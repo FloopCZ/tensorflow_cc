@@ -39,24 +39,30 @@ docker build -t floopcz/tensorflow_cc:ubuntu -f Dockerfiles/ubuntu .
 #### 1) Install requirements
 
 ##### Ubuntu 18.04:
+Install repository requirements:
 ```
-sudo apt-get install build-essential curl git cmake unzip autoconf autogen automake libtool mlocate \
-                     zlib1g-dev g++-7 python python3-numpy python3-dev python3-pip python3-wheel wget
-sudo updatedb
+sudo apt-get install cmake curl g++-7 git python3-dev python3-numpy sudo wget
 ```
 
-If you require GPU support on Ubuntu, please also install [Bazel](https://bazel.build/), NVIDIA CUDA Toolkit (>=10.1), NVIDIA drivers, cuDNN, and `cuda-command-line-tools` package. The tensorflow build script will automatically detect CUDA if it is installed in `/opt/cuda` or `/usr/local/cuda` directories.
+In order to build the TensorFlow itself, the build procedure also requires [Bazel](https://bazel.build/):
+```
+curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+sudo apt-get update && sudo apt-get install bazel
+```
+
+If you require GPU support on Ubuntu, please also install NVIDIA CUDA Toolkit (>=10.1), NVIDIA drivers, cuDNN, and `cuda-command-line-tools` package.
+The build procedure will automatically detect CUDA if it is installed in `/opt/cuda` or `/usr/local/cuda` directories.
 
 ##### Arch Linux:
 ```
-sudo pacman -S base-devel cmake git unzip mlocate python python-numpy wget
-sudo updatedb
+sudo pacman -S base-devel bazel cmake git python python-numpy wget
 ```
 
 For GPU support on Arch, also install the following:
 
 ```
-sudo pacman -S gcc7 bazel cuda cudnn nvidia
+sudo pacman -S cuda cudnn nvidia
 ```
 
 **Warning:** Newer versions of TensorFlow sometimes fail to build with the latest version of Bazel. You may wish
