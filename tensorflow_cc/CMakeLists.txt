@@ -8,9 +8,8 @@ project(
 # If enabled, bazel has to be installed.
 option(ALLOW_CUDA "Try to find and use CUDA." ON)
 option(REQUIRE_CUDA "Make sure to find and use CUDA (implies ALLOW_CUDA)." OFF)
-set(TENSORFLOW_TAG "v2.2.0-rc0" CACHE STRING "The tensorflow release tag to be checked out (default v2.2.0-rc0).")
-# TODO use ${version} when not -rc0
-option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." OFF)
+set(TENSORFLOW_TAG "v2.2.0-rc1" CACHE STRING "The tensorflow release tag to be checked out (default v2.2.0-rc1).")
+# TODO use ${version} when not -rc1
 set(TARGET_CXX_STANDARD "cxx_std_11" CACHE STRING "C++ standard to be enforced when linking to TensorflowCC targets (e.g., cxx_std_11).")
 
 # -------------
@@ -35,13 +34,6 @@ configure_file("cmake/build_tensorflow.sh.in" "build_tensorflow.sh" @ONLY)
 
 include(TensorflowBase)
 
-# ----------------------------------
-# Define Shared Tensorflow Interface
-# ----------------------------------
-if(SYSTEM_PROTOBUF)
-  find_package(Protobuf REQUIRED)
-endif()
-
 # ------------------------------
 # Define Tensorflow_CC Interface
 # ------------------------------
@@ -59,16 +51,6 @@ target_link_libraries(
   "${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}"
   dl pthread
 )
-if(SYSTEM_PROTOBUF)
-  target_include_directories(
-    tensorflow_cc INTERFACE
-    "${Protobuf_INCLUDE_DIRS}"
-  )
-  target_link_libraries(
-    tensorflow_cc INTERFACE
-    "${Protobuf_LIBRARIES}"
-  )
-endif()
 
 # ----------------------------------------
 # Configure CMake Config and Version Files
