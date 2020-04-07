@@ -1,6 +1,6 @@
 # tensorflow_cc
 [![Build Status](http://ash.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://ash.floop.cz:8080/job/tensorflow_cc/)
-[![TF version](https://img.shields.io/badge/TF%20version-2.2.0%20rc1-brightgreen.svg)]()
+[![TF version](https://img.shields.io/badge/TF%20version-2.2.0%20rc2-brightgreen.svg)]()
 
 This repository makes possible the usage of the [TensorFlow C++](https://www.tensorflow.org/api_docs/cc/) API from the outside of the TensorFlow source code folders and without the use of the [Bazel](https://bazel.build/) build system.
 
