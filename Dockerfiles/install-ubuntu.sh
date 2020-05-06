@@ -13,6 +13,7 @@ for key in "$@"; do
 done
 
 # install requirements
+export DEBIAN_FRONTEND=noninteractive
 apt-get -y update
 apt-get -y install \
   cmake \
