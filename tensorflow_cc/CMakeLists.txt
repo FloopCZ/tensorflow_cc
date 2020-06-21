@@ -8,8 +8,7 @@ project(
 # If enabled, bazel has to be installed.
 option(ALLOW_CUDA "Try to find and use CUDA." ON)
 option(REQUIRE_CUDA "Make sure to find and use CUDA (implies ALLOW_CUDA)." OFF)
-set(TENSORFLOW_TAG "v2.2.0-rc2" CACHE STRING "The tensorflow release tag to be checked out (default v2.2.0-rc2).")
-# TODO use ${version} when not -rc2
+set(TENSORFLOW_TAG "v${version}" CACHE STRING "The tensorflow release tag to be checked out (default v${version}).")
 set(TARGET_CXX_STANDARD "cxx_std_11" CACHE STRING "C++ standard to be enforced when linking to TensorflowCC targets (e.g., cxx_std_11).")
 
 # -------------
