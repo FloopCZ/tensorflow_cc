@@ -29,11 +29,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     /tmp/${bazel_installer}
     rm /tmp/${bazel_installer}
 
-    if [[ ${BUILD_WITH_CUDA:-"OFF"} == "ON" ]]; then
-        # install libcupti
-        apt-get -y install cuda-command-line-tools-10-1
-    fi
-
 else
     echo "This script supports only Debian-based operating systems (like Ubuntu)." \
          "Please consult README file for manual installation on your '$OSTYPE' OS."
