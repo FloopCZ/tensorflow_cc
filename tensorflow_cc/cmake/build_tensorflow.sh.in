@@ -58,8 +58,8 @@ if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
     export TF_CUDA_COMPUTE_CAPABILITIES=${TF_CUDA_COMPUTE_CAPABILITIES:-"3.5,7.0"}  # default from configure.py
     export TF_CUDA_PATHS=${TF_CUDA_PATHS:-"/opt/cuda,/usr/local/cuda,/usr/local,/usr/cuda,/usr"}
     export TF_CUDA_VERSION="$(nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')"
-    export TF_NCCL_VERSION="$(find / -name 'libnccl.so.*' | tail -n1 | sed -r 's/^.*\.so\.//')"
-    export TF_CUDNN_VERSION="$(find / -name 'libcudnn.so.*' | tail -n1 | sed -r 's/^.*\.so\.//')"
+    export TF_NCCL_VERSION="$(find /opt /usr -name 'libnccl.so.*' | tail -n1 | sed -r 's/^.*\.so\.//')"
+    export TF_CUDNN_VERSION="$(find /opt /usr -name 'libcudnn.so.*' | tail -n1 | sed -r 's/^.*\.so\.//')"
 
     # choose the right version of CUDA compiler
     if [ -z "$GCC_HOST_COMPILER_PATH" ]; then
