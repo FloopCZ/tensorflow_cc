@@ -63,7 +63,11 @@ if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
 
     # choose the right version of CUDA compiler
     if [ -z "$GCC_HOST_COMPILER_PATH" ]; then
-        if   hash gcc-9 2>/dev/null && version_gt 9.4 `gcc-9 -dumpversion`; then
+        if   hash gcc 2>/dev/null && version_gt 10.3 `gcc -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc"}
+        elif hash gcc-10 2>/dev/null && version_gt 10.3 `gcc-10 -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-10"}
+        elif hash gcc-9 2>/dev/null && version_gt 9.4 `gcc-9 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-9"}
         elif hash gcc-8 2>/dev/null && version_gt 8.5 `gcc-8 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-8"}
