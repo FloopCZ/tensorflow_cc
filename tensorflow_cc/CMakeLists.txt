@@ -9,6 +9,7 @@ project(
 option(ALLOW_CUDA "Try to find and use CUDA." ON)
 option(REQUIRE_CUDA "Make sure to find and use CUDA (implies ALLOW_CUDA)." OFF)
 set(TENSORFLOW_TAG "v${version}" CACHE STRING "The tensorflow release tag to be checked out (default v${version}).")
+option(SYSTEM_PROTOBUF "Link to system protobuf." OFF)
 set(TARGET_CXX_STANDARD "cxx_std_11" CACHE STRING "C++ standard to be enforced when linking to TensorflowCC targets (e.g., cxx_std_11).")
 
 # -------------
@@ -53,6 +54,17 @@ target_link_libraries(
   "${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}"
   dl pthread
 )
+if(SYSTEM_PROTOBUF)
+  find_package(Protobuf REQUIRED)
+  target_include_directories(
+    tensorflow_cc INTERFACE
+    "${Protobuf_INCLUDE_DIRS}"
+  )
+  target_link_libraries(
+    tensorflow_cc INTERFACE
+    "${Protobuf_LIBRARIES}"
+  )
+endif()
 
 # ----------------------------------------
 # Configure CMake Config and Version Files
