@@ -59,5 +59,5 @@ fi
 # cleanup packages
 rm -rvf /usr/local/lib/bazel/
 rm -vf /usr/local/bin/bazel
-pacman --noconfirm -R jdk11-openjdk python python-numpy
+pacman --noconfirm -R jdk11-openjdk
 pacman --noconfirm -Rns $(pacman -Qtdq)

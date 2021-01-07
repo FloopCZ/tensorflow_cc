@@ -10,4 +10,4 @@ RUN ./tensorflow_cc/Dockerfiles/install-archlinux.sh --cuda
 
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
-ENV NVIDIA_REQUIRE_CUDA "cuda>=10.1"
+ENV NVIDIA_REQUIRE_CUDA "cuda>=11.1"

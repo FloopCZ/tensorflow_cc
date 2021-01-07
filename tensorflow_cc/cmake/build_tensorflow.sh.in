@@ -11,7 +11,6 @@ export CC_OPT_FLAGS=${CC_OPT_FLAGS:-"-march=ivybridge"}
 export TF_NEED_GCP=${TF_NEED_GCP:-0}
 export TF_NEED_HDFS=${TF_NEED_HDFS:-0}
 export TF_NEED_OPENCL=${TF_NEED_OPENCL:-0}
-export TF_NEED_OPENCL_SYCL=${TF_NEED_OPENCL_SYCL:-0}
 export TF_NEED_TENSORRT=${TF_NEED_TENSORRT:-0}
 export TF_NEED_NGRAPH=${TF_NEED_NGRAPH:-0}
 export TF_NEED_JEMALLOC=${TF_NEED_JEMALLOC:-1}
@@ -19,7 +18,6 @@ export TF_NEED_VERBS=${TF_NEED_VERBS:-0}
 export TF_NEED_MKL=${TF_NEED_MKL:-1}
 export TF_DOWNLOAD_MKL=${TF_DOWNLOAD_MKL:-1}
 export TF_NEED_MPI=${TF_NEED_MPI:-0}
-export TF_ENABLE_XLA=${TF_ENABLE_XLA:-1}
 export TF_NEED_AWS=${TF_NEED_AWS:-0}
 export TF_NEED_GDR=${TF_NEED_GDR:-0}
 export TF_CUDA_CLANG=${TF_CUDA_CLANG:-0}
@@ -63,7 +61,11 @@ if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
 
     # choose the right version of CUDA compiler
     if [ -z "$GCC_HOST_COMPILER_PATH" ]; then
-        if   hash gcc-9 2>/dev/null && version_gt 9.4 `gcc-9 -dumpversion`; then
+        if   hash gcc 2>/dev/null && version_gt 10.3 `gcc -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc"}
+        elif hash gcc-10 2>/dev/null && version_gt 10.3 `gcc-10 -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-10"}
+        elif hash gcc-9 2>/dev/null && version_gt 9.4 `gcc-9 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-9"}
         elif hash gcc-8 2>/dev/null && version_gt 8.5 `gcc-8 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-8"}

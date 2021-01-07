@@ -1,6 +1,6 @@
 # tensorflow_cc
 [![Build Status](http://elm.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://elm.floop.cz:8080/job/tensorflow_cc/)
-[![TF version](https://img.shields.io/badge/TF%20version-2.3.1-brightgreen.svg)]()
+[![TF version](https://img.shields.io/badge/TF%20version-2.4.0-brightgreen.svg)]()
 
 This repository makes possible the usage of the [TensorFlow C++](https://www.tensorflow.org/api_docs/cc/) API from the outside of the TensorFlow source code folders and without the use of the [Bazel](https://bazel.build/) build system.
 
@@ -46,12 +46,13 @@ sudo apt-get install cmake curl g++-7 git python3-dev python3-numpy sudo wget
 
 In order to build the TensorFlow itself, the build procedure also requires [Bazel](https://bazel.build/):
 ```
-curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
+sudo mv bazel.gpg /etc/apt/trusted.gpg.d/
 echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
 sudo apt-get update && sudo apt-get install bazel
 ```
 
-If you require GPU support on Ubuntu, please also install NVIDIA CUDA Toolkit (>=10.1), NVIDIA drivers, cuDNN, and `cuda-command-line-tools` package.
+If you require GPU support on Ubuntu, please also install NVIDIA CUDA Toolkit (>=11.1), NVIDIA drivers, cuDNN, and `cuda-command-line-tools` package.
 The build procedure will automatically detect CUDA if it is installed in `/opt/cuda` or `/usr/local/cuda` directories.
 
 ##### Arch Linux:
