@@ -19,7 +19,7 @@ chmod go+rX tensorflow_cc/tensorflow_cc/build
 cd tensorflow_cc/tensorflow_cc/build
 
 # build and install
-cmake ..
+cmake -DLOCAL_RAM_RESOURCES=2048 ..
 make
 rm -rf /home/tensorflow_cc/.cache
 rm -rf /root/.cache
