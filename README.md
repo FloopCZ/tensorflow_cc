@@ -1,5 +1,5 @@
 # tensorflow_cc
-[![Build Status](http://elm.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://elm.floop.cz:8080/job/tensorflow_cc/)
+[![Build Status](http://oak.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://oak.floop.cz:8080/job/tensorflow_cc/)
 [![TF version](https://img.shields.io/badge/TF%20version-2.5.0-brightgreen.svg)]()
 
 This repository makes possible the usage of the [TensorFlow C++](https://www.tensorflow.org/api_docs/cc/) API from the outside of the TensorFlow source code folders and without the use of the [Bazel](https://bazel.build/) build system.
@@ -85,8 +85,8 @@ make
 sudo make install
 ```
 
-**Warning:** Optimizations for Intel CPU generation `>=ivybridge` are enabled by default. If you have a
-processor that is older than `ivybridge` generation, you may wish to run `export CC_OPT_FLAGS="-march=native"`
+**Warning:** Optimizations for Intel CPU generation `>=haswell` are enabled by default. If you have a
+processor that is older than `haswell` generation, you may wish to run `export CC_OPT_FLAGS="-march=native"`
 before the build. This command provides the best possible optimizations for your current CPU generation, but
 it may cause the built library to be incompatible with older generations.
 
