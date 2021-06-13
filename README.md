@@ -83,6 +83,7 @@ mkdir build && cd build
 cmake ..
 make
 sudo make install
+sudo ldconfig
 ```
 
 **Warning:** Optimizations for Intel CPU generation `>=haswell` are enabled by default. If you have a
