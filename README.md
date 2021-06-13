@@ -90,6 +90,11 @@ processor that is older than `haswell` generation, you may wish to run `export C
 before the build. This command provides the best possible optimizations for your current CPU generation, but
 it may cause the built library to be incompatible with older generations.
 
+**Warning:** In low-memory or many-cpu environments, the bazel scheduler can miss the resource consumption
+estimates and the build may be terminated by the out-of-memory killer.
+If that is your case, consider adding resource limit parameters to CMake, e.g.,
+`cmake -DLOCAL_RAM_RESOURCES=2048 -DLOCAL_CPU_RESOURCES=4 ..`
+
 #### 4) (Optional) Free disk space
 
 ```
