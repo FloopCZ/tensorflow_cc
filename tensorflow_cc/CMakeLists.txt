@@ -45,14 +45,14 @@ target_compile_features(tensorflow_cc INTERFACE ${TARGET_CXX_STANDARD})
 # The include folders are sometimes contained under bazel-bin/bin/ and sometimes just bazel-bin.
 target_include_directories(
   tensorflow_cc INTERFACE
-  "${CMAKE_INSTALL_PREFIX}/include/tensorflow/bazel-bin/tensorflow/include"
-  "${CMAKE_INSTALL_PREFIX}/include/tensorflow/bazel-bin/tensorflow/include/src"
-  "${CMAKE_INSTALL_PREFIX}/include/tensorflow/bazel-bin/bin/tensorflow/include"
-  "${CMAKE_INSTALL_PREFIX}/include/tensorflow/bazel-bin/bin/tensorflow/include/src"
+  $<INSTALL_INTERFACE:include/tensorflow/bazel-bin/tensorflow/include>
+  $<INSTALL_INTERFACE:include/tensorflow/bazel-bin/tensorflow/include/src>
+  $<INSTALL_INTERFACE:include/tensorflow/bazel-bin/bin/tensorflow/include>
+  $<INSTALL_INTERFACE:include/tensorflow/bazel-bin/bin/tensorflow/include/src>
 )
 target_link_libraries(
   tensorflow_cc INTERFACE
-  "${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}"
+  $<INSTALL_INTERFACE:lib/libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}>
   dl pthread
 )
 
