@@ -5,13 +5,12 @@ project(
 )
 set(PROJECT_VERSION "${version}")
 
-# If enabled, bazel has to be installed.
 option(ALLOW_CUDA "Try to find and use CUDA." ON)
 option(REQUIRE_CUDA "Make sure to find and use CUDA (implies ALLOW_CUDA)." OFF)
 set(LOCAL_RAM_RESOURCES 4096 CACHE STRING "The amount of local RAM resources passed to bazel scheduler (e.g., 4096).")
 set(LOCAL_CPU_RESOURCES HOST_CPUS CACHE STRING "The amount of local CPU cores passed to bazel scheduler (e.g., 2).")
 set(TENSORFLOW_TAG "v${version}" CACHE STRING "The tensorflow release tag to be checked out (default v${version}).")
-set(TARGET_CXX_STANDARD "cxx_std_11" CACHE STRING "C++ standard to be enforced when linking to TensorflowCC targets (e.g., cxx_std_11).")
+set(CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard for building and linking the library (e.g., 17).")
 
 # -------------
 # CMake Options
@@ -22,9 +21,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 include(CMakePackageConfigHelpers)
 set(CMAKECFG_INSTALL_DIR lib/cmake/TensorflowCC)
-
-set_property(CACHE TARGET_CXX_STANDARD PROPERTY STRINGS
-    "cxx_std_11" "cxx_std_14" "cxx_std_17" "cxx_std_20")
 
 # Configure the build_tensorflow script.
 configure_file("cmake/build_tensorflow.sh.in" "build_tensorflow.sh" @ONLY)
@@ -40,7 +36,7 @@ include(TensorflowBase)
 # ------------------------------
 
 add_library(tensorflow_cc INTERFACE)
-target_compile_features(tensorflow_cc INTERFACE ${TARGET_CXX_STANDARD})
+target_compile_features(tensorflow_cc INTERFACE "cxx_std_${CMAKE_CXX_STANDARD}")
 
 # The include folders are sometimes contained under bazel-bin/bin/ and sometimes just bazel-bin.
 target_include_directories(
