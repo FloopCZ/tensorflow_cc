@@ -103,6 +103,7 @@ bazel --host_jvm_args="-Xmx${JVM_RAM_RESOURCES}m" \
       build --config=opt \
             --config=monolithic \
             --local_ram_resources=@LOCAL_RAM_RESOURCES@ \
+            --local_cpu_resources=@LOCAL_CPU_RESOURCES@ \
             --discard_analysis_cache \
             $cuda_config_opts \
             tensorflow:libtensorflow_cc.so \
