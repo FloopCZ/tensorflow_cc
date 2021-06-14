@@ -52,7 +52,7 @@ target_include_directories(
 )
 target_link_libraries(
   tensorflow_cc INTERFACE
-  $<INSTALL_INTERFACE:lib/libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}>
+  "${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}"
   dl pthread
 )
 
