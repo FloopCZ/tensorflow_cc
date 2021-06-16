@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
+cmake_policy(SET CMP0048 NEW)  # Enable version parameter in project().
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/PROJECT_VERSION" version)
 project(
   "tensorflow_cc"
+  VERSION ${version}
 )
-set(PROJECT_VERSION "${version}")
 
 # If enabled, bazel has to be installed.
 option(ALLOW_CUDA "Try to find and use CUDA." ON)
