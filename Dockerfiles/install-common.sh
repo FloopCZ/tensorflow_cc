@@ -24,6 +24,7 @@ make
 rm -rf /home/tensorflow_cc/.cache
 rm -rf /root/.cache
 make install
+ldconfig
 cd "$cwd"
 rm -rf tensorflow_cc/tensorflow_cc/build
 
