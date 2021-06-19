@@ -11,7 +11,7 @@ option(REQUIRE_CUDA "Make sure to find and use CUDA (implies ALLOW_CUDA)." OFF)
 set(LOCAL_RAM_RESOURCES 4096 CACHE STRING "The amount of local RAM resources passed to bazel scheduler (e.g., 4096).")
 set(LOCAL_CPU_RESOURCES HOST_CPUS CACHE STRING "The amount of local CPU cores passed to bazel scheduler (e.g., 2).")
 set(TENSORFLOW_TAG "v${version}" CACHE STRING "The tensorflow release tag to be checked out (default v${version}).")
-set(CMAKE_CXX_STANDARD 17 CACHE STRING "The C++ standard for building and linking the library (e.g., 17).")
+set(CMAKE_CXX_STANDARD 14 CACHE STRING "The C++ standard for building and linking the library (e.g., 14).")
 
 # -------------
 # CMake Options
