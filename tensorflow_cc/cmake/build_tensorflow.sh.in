@@ -93,6 +93,13 @@ else
     export TF_NEED_CUDA=0
 fi
 
+# set bazel options for c++17 standard if necessary
+cxx_std_opts=""
+if [ "@CMAKE_CXX_STANDARD@" == 17 ]; then
+    echo "Using C++17 standard"
+    cxx_std_opts="--config=c++17_gcc"
+fi
+
 # configure and build
 ./configure
 JVM_RAM_RESOURCES=$((@LOCAL_RAM_RESOURCES@ / 4))
@@ -103,6 +110,7 @@ bazel --host_jvm_args="-Xmx${JVM_RAM_RESOURCES}m" \
             --local_ram_resources=@LOCAL_RAM_RESOURCES@ \
             --local_cpu_resources=@LOCAL_CPU_RESOURCES@ \
             --discard_analysis_cache \
+            $cxx_std_opts \
             $cuda_config_opts \
             tensorflow:libtensorflow_cc.so \
             tensorflow:install_headers
