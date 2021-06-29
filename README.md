@@ -1,6 +1,6 @@
 # tensorflow_cc
-[![Build Status](http://elm.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://elm.floop.cz:8080/job/tensorflow_cc/)
-[![TF version](https://img.shields.io/badge/TF%20version-2.3.1-brightgreen.svg)]()
+[![Build Status](http://oak.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://oak.floop.cz:8080/job/tensorflow_cc/)
+[![TF version](https://img.shields.io/badge/TF%20version-2.5.0-brightgreen.svg)]()
 
 This repository makes possible the usage of the [TensorFlow C++](https://www.tensorflow.org/api_docs/cc/) API from the outside of the TensorFlow source code folders and without the use of the [Bazel](https://bazel.build/) build system.
 
@@ -46,12 +46,13 @@ sudo apt-get install cmake curl g++-7 git python3-dev python3-numpy sudo wget
 
 In order to build the TensorFlow itself, the build procedure also requires [Bazel](https://bazel.build/):
 ```
-curl https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
+sudo mv bazel.gpg /etc/apt/trusted.gpg.d/
 echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
 sudo apt-get update && sudo apt-get install bazel
 ```
 
-If you require GPU support on Ubuntu, please also install NVIDIA CUDA Toolkit (>=10.1), NVIDIA drivers, cuDNN, and `cuda-command-line-tools` package.
+If you require GPU support on Ubuntu, please also install NVIDIA CUDA Toolkit (>=11.1), NVIDIA drivers, cuDNN, and `cuda-command-line-tools` package.
 The build procedure will automatically detect CUDA if it is installed in `/opt/cuda` or `/usr/local/cuda` directories.
 
 ##### Arch Linux:
@@ -66,7 +67,7 @@ sudo pacman -S cuda cudnn nvidia
 ```
 
 **Warning:** Newer versions of TensorFlow sometimes fail to build with the latest version of Bazel. You may wish
-to install an older version of Bazel (e.g., 3.1.0).
+to install an older version of Bazel (e.g., 3.7.2).
 
 #### 2) Clone this repository
 ```
@@ -82,12 +83,18 @@ mkdir build && cd build
 cmake ..
 make
 sudo make install
+sudo ldconfig
 ```
 
-**Warning:** Optimizations for Intel CPU generation `>=ivybridge` are enabled by default. If you have a
-processor that is older than `ivybridge` generation, you may wish to run `export CC_OPT_FLAGS="-march=native"`
+**Warning:** Optimizations for Intel CPU generation `>=haswell` are enabled by default. If you have a
+processor that is older than `haswell` generation, you may wish to run `export CC_OPT_FLAGS="-march=native"`
 before the build. This command provides the best possible optimizations for your current CPU generation, but
 it may cause the built library to be incompatible with older generations.
+
+**Warning:** In low-memory or many-cpu environments, the bazel scheduler can miss the resource consumption
+estimates and the build may be terminated by the out-of-memory killer.
+If that is your case, consider adding resource limit parameters to CMake, e.g.,
+`cmake -DLOCAL_RAM_RESOURCES=2048 -DLOCAL_CPU_RESOURCES=4 ..`
 
 #### 4) (Optional) Free disk space
 

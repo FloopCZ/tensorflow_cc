@@ -7,11 +7,10 @@ function version_gt {
 }
 
 # configure environmental variables
-export CC_OPT_FLAGS=${CC_OPT_FLAGS:-"-march=ivybridge"}
+export CC_OPT_FLAGS=${CC_OPT_FLAGS:-"-march=haswell"}
 export TF_NEED_GCP=${TF_NEED_GCP:-0}
 export TF_NEED_HDFS=${TF_NEED_HDFS:-0}
 export TF_NEED_OPENCL=${TF_NEED_OPENCL:-0}
-export TF_NEED_OPENCL_SYCL=${TF_NEED_OPENCL_SYCL:-0}
 export TF_NEED_TENSORRT=${TF_NEED_TENSORRT:-0}
 export TF_NEED_NGRAPH=${TF_NEED_NGRAPH:-0}
 export TF_NEED_JEMALLOC=${TF_NEED_JEMALLOC:-1}
@@ -19,7 +18,6 @@ export TF_NEED_VERBS=${TF_NEED_VERBS:-0}
 export TF_NEED_MKL=${TF_NEED_MKL:-1}
 export TF_DOWNLOAD_MKL=${TF_DOWNLOAD_MKL:-1}
 export TF_NEED_MPI=${TF_NEED_MPI:-0}
-export TF_ENABLE_XLA=${TF_ENABLE_XLA:-1}
 export TF_NEED_AWS=${TF_NEED_AWS:-0}
 export TF_NEED_GDR=${TF_NEED_GDR:-0}
 export TF_CUDA_CLANG=${TF_CUDA_CLANG:-0}
@@ -58,12 +56,14 @@ if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
     export TF_CUDA_COMPUTE_CAPABILITIES=${TF_CUDA_COMPUTE_CAPABILITIES:-"3.5,7.0"}  # default from configure.py
     export TF_CUDA_PATHS=${TF_CUDA_PATHS:-"/opt/cuda,/usr/local/cuda,/usr/local,/usr/cuda,/usr"}
     export TF_CUDA_VERSION="$(nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')"
-    export TF_NCCL_VERSION="$(find /opt /usr -name 'libnccl.so.*' | tail -n1 | sed -r 's/^.*\.so\.//')"
-    export TF_CUDNN_VERSION="$(find /opt /usr -name 'libcudnn.so.*' | tail -n1 | sed -r 's/^.*\.so\.//')"
+    export TF_NCCL_VERSION="$(find /opt /usr -name 'libnccl.so.*' -path '*/cuda*' | tail -n1 | sed -r 's/^.*\.so\.//')"
+    export TF_CUDNN_VERSION="$(find /opt /usr -name 'libcudnn.so.*' -path '*/cuda*' | tail -n1 | sed -r 's/^.*\.so\.//')"
 
     # choose the right version of CUDA compiler
     if [ -z "$GCC_HOST_COMPILER_PATH" ]; then
-        if   hash gcc-9 2>/dev/null && version_gt 9.4 `gcc-9 -dumpversion`; then
+        if hash gcc-10 2>/dev/null && version_gt 10.3 `gcc-10 -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-10"}
+        elif hash gcc-9 2>/dev/null && version_gt 9.4 `gcc-9 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-9"}
         elif hash gcc-8 2>/dev/null && version_gt 8.5 `gcc-8 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-8"}
@@ -93,10 +93,24 @@ else
     export TF_NEED_CUDA=0
 fi
 
+# set bazel options for c++17 standard if necessary
+cxx_std_opts=""
+if [ "@CMAKE_CXX_STANDARD@" == 17 ]; then
+    echo "Using C++17 standard"
+    cxx_std_opts="--config=c++17_gcc"
+fi
+
 # configure and build
 ./configure
-bazel build --config=opt \
+JVM_RAM_RESOURCES=$((@LOCAL_RAM_RESOURCES@ / 4))
+JVM_RAM_RESOURCES=$((${JVM_RAM_RESOURCES} < 1024 ? 1024 : ${JVM_RAM_RESOURCES}))
+bazel --host_jvm_args="-Xmx${JVM_RAM_RESOURCES}m" \
+      build --config=opt \
             --config=monolithic \
+            --local_ram_resources=@LOCAL_RAM_RESOURCES@ \
+            --local_cpu_resources=@LOCAL_CPU_RESOURCES@ \
+            --discard_analysis_cache \
+            $cxx_std_opts \
             $cuda_config_opts \
             tensorflow:libtensorflow_cc.so \
             tensorflow:install_headers
