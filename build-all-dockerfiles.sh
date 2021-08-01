@@ -3,13 +3,32 @@
 # Parse command line arguments.
 prune=false
 push=false
-for key in "$@"; do
+cpu_shares=0
+cpu_quota=-1
+while [[ $# -gt 0 ]]; do
+    key="$1"
     case $key in
         --prune)
         prune=true
+        shift
         ;;
         --push)
         push=true
+        shift
+        ;;
+        --cpu-shares)
+        cpu_shares="$2"
+        shift
+        shift
+        ;;
+        --cpu-quota)
+        cpu_quota="$2"
+        shift
+        shift
+        ;;
+        *)
+        echo "Unknown option $key"
+        exit 1
         ;;
     esac
 done
@@ -18,7 +37,7 @@ done
 PROJECT_VERSION="$(cat ./tensorflow_cc/PROJECT_VERSION)"
 
 for tag in ubuntu ubuntu-cuda archlinux archlinux-cuda; do
-    docker build --pull -t floopcz/tensorflow_cc:${tag} -f Dockerfiles/${tag} .
+    docker build --cpu-shares="${cpu_shares}" --cpu-quota="${cpu_quota}" --pull -t floopcz/tensorflow_cc:${tag} -f Dockerfiles/${tag} .
     docker tag floopcz/tensorflow_cc:${tag} floopcz/tensorflow_cc:${tag}-"${PROJECT_VERSION}"
     if $push; then
         docker push floopcz/tensorflow_cc:${tag}
