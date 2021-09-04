@@ -17,7 +17,7 @@ docker run -it floopcz/tensorflow_cc:ubuntu /bin/bash
 
 If you also want to utilize your NVIDIA GPU, install [NVIDIA Docker](https://github.com/NVIDIA/nvidia-docker) and run:
 ```bash
-docker run --runtime=nvidia -it floopcz/tensorflow_cc:ubuntu-cuda /bin/bash
+docker run --gpus all -it floopcz/tensorflow_cc:ubuntu-cuda /bin/bash
 ```
 
 The list of available images:
