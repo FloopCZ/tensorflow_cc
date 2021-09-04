@@ -19,7 +19,4 @@ ExternalProject_Add(
           COMMAND mkdir -p "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/bin/tensorflow/include/src"
           COMMAND touch "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/include/src/__placeholder__.h"
           COMMAND touch "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/bin/tensorflow/include/src/__placeholder__.h"
-  # Fix compilation with CUDA 11.3.
-  PATCH_COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/patches/v2.5.0-Fix-NCCL-build-failure-with-CUDA-11.3.patch" .
-        COMMAND patch -p1 < v2.5.0-Fix-NCCL-build-failure-with-CUDA-11.3.patch
 )
