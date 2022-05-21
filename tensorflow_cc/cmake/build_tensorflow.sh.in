@@ -53,7 +53,11 @@ if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
     echo "CUDA support enabled"
     cuda_config_opts="--config=cuda"
     export TF_NEED_CUDA=1
-    export TF_CUDA_COMPUTE_CAPABILITIES=${TF_CUDA_COMPUTE_CAPABILITIES:-"3.5,7.0"}  # default from configure.py
+    # Capabilities are taken from Archlinux tensorflow build.
+    # https://github.com/tensorflow/tensorflow/blob/1ba2eb7b313c0c5001ee1683a3ec4fbae01105fd/third_party/gpus/cuda_configure.bzl#L411-L446
+    # according to the above, we should be specifying CUDA compute capabilities as 'sm_XX' or 'compute_XX' from now on
+    # add latest PTX for future compatibility
+    export TF_CUDA_COMPUTE_CAPABILITIES=${TF_CUDA_COMPUTE_CAPABILITIES:-"sm_52,sm_53,sm_60,sm_61,sm_62,sm_70,sm_72,sm_75,sm_80,sm_86,compute_86"}
     export TF_CUDA_PATHS=${TF_CUDA_PATHS:-"/opt/cuda,/usr/local/cuda,/usr/local,/usr/cuda,/usr"}
     export TF_CUDA_VERSION="$(nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')"
     export TF_NCCL_VERSION="$(find /opt /usr -name 'libnccl.so.*' -path '*/cuda*' | tail -n1 | sed -r 's/^.*\.so\.//')"
@@ -61,7 +65,9 @@ if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
 
     # choose the right version of CUDA compiler
     if [ -z "$GCC_HOST_COMPILER_PATH" ]; then
-        if hash gcc-10 2>/dev/null && version_gt 10.3 `gcc-10 -dumpversion`; then
+        if hash gcc-11 2>/dev/null && version_gt 11.1 `gcc-11 -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-11"}
+        elif hash gcc-10 2>/dev/null && version_gt 10.3 `gcc-10 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-10"}
         elif hash gcc-9 2>/dev/null && version_gt 9.4 `gcc-9 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-9"}
@@ -76,12 +82,7 @@ if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
         elif hash gcc-4 2>/dev/null && version_gt 4.9 `gcc-4 -dumpversion`; then
             export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-4"}
         else
-            echo "No supported CUDA compiler available. If you are sure your compiler"
-            echo "version is supported by your CUDA version, please run e.g.:"
-            echo "export GCC_HOST_COMPILER_PATH=/usr/bin/gcc"
-            echo "before the build. For the list of supported compilers refer to:"
-            echo "https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html"
-            exit 1
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc"}
         fi
     fi
 

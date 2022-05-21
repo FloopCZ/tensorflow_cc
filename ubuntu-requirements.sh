@@ -13,7 +13,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     apt-get -y update
     apt-get -y install \
     cmake \
-    g++-7 \
+    g++-9 \
     git \
     python3-dev \
     python3-numpy \
@@ -22,7 +22,8 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 
     # install bazel
     export BAZEL_VERSION=${BAZEL_VERSION:-`cat $(dirname "$0")/Dockerfiles/BAZEL_VERSION`}
-    apt-get -y install pkg-config zip g++ zlib1g-dev unzip python
+    apt-get -y install pkg-config zip g++ zlib1g-dev unzip python3
+    update-alternatives --install /usr/bin/python python /usr/bin/python3 1
     bazel_installer=bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh
     wget -P /tmp https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${bazel_installer}
     chmod +x /tmp/${bazel_installer}
