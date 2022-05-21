@@ -67,7 +67,10 @@ sudo pacman -S cuda cudnn nvidia
 ```
 
 **Warning:** Newer versions of TensorFlow sometimes fail to build with the latest version of Bazel. You may wish
-to install an older version of Bazel (e.g., 3.7.2).
+to install an older version of Bazel (e.g., 5.1.1).
+
+**Warning:** If your program uses Protobuf and you encounter linkage problems, you can try `-DINSTALL_PROTOBUF=ON` option
+to install a Protobuf version matching the version bundled with TensorFlow.
 
 #### 2) Clone this repository
 ```
