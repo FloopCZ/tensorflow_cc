@@ -1,4 +1,18 @@
-set(PROTOBUF_ARCHIVE https://github.com/protocolbuffers/protobuf/archive/v3.9.2.zip)
+# Find the proper protobuf archive url.
+file(DOWNLOAD
+  "https://raw.githubusercontent.com/tensorflow/tensorflow/${TENSORFLOW_TAG}/tensorflow/workspace2.bzl"
+  "${CMAKE_CURRENT_BINARY_DIR}/tmp/workspace2.bzl"
+)
+file(READ
+  "${CMAKE_CURRENT_BINARY_DIR}/tmp/workspace2.bzl"
+  workspace2_str
+)
+string(REGEX MATCH
+  "https://github.com/protocolbuffers/protobuf/archive/v[.0-9]+.zip"
+  PROTOBUF_ARCHIVE
+  "${workspace2_str}"
+)
+message("Will build Protobuf from '${PROTOBUF_ARCHIVE}'.")
 
 ExternalProject_Add(
   protobuf-external
