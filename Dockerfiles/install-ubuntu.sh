@@ -17,7 +17,7 @@ done
 
 if $cuda; then
     # install libcupti
-    apt-get -y install cuda-command-line-tools-10-1
+    apt-get -y install cuda-command-line-tools-11-6
 fi
 
 apt-get -y clean
