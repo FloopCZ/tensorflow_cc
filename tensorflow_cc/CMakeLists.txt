@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
 cmake_policy(SET CMP0048 NEW)  # Enable version parameter in project().
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/PROJECT_VERSION" version)
 project(
