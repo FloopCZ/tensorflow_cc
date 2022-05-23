@@ -83,23 +83,14 @@ install(
                  REGEX ".*Eigen.*"
 )
 install(
-  FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/libtensorflow_cc.so"
+  DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/tensorflow/"
   DESTINATION lib
-  RENAME libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}
-  OPTIONAL
+  FILES_MATCHING PATTERN "libtensorflow_cc.so*"
 )
 install(
-  FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/bin/tensorflow/libtensorflow_cc.so"
+  DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/bazel-bin/bin/tensorflow/"
   DESTINATION lib
-  RENAME libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}
-  OPTIONAL
-)
-# Make versioned symlinks to the library
-install(CODE "execute_process(                          \
-  COMMAND ${CMAKE_COMMAND} -E create_symlink            \
-    libtensorflow_cc.so.${PROJECT_VERSION_MAJOR}        \
-    ${CMAKE_INSTALL_PREFIX}/lib/libtensorflow_cc.so     \
-  )"
+  FILES_MATCHING PATTERN "libtensorflow_cc.so*"
 )
 
 # --------------------------
