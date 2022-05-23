@@ -44,6 +44,11 @@ Install repository requirements:
 sudo apt-get install cmake curl g++-7 git python3-dev python3-numpy sudo wget
 ```
 
+Set up Python 3 to be the default Python:
+```
+update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+```
+
 In order to build the TensorFlow itself, the build procedure also requires [Bazel](https://bazel.build/):
 ```
 curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
