@@ -64,27 +64,20 @@ if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
     export TF_CUDNN_VERSION="$(find /opt /usr -name 'libcudnn.so.*' -path '*/cuda*' | tail -n1 | sed -r 's/^.*\.so\.//')"
 
     # choose the right version of CUDA compiler
-    if [ -z "$CC" ] || [ -z $GCC ]; then
+    if [ -z "${GCC_HOST_COMPILER_PATH}" ]; then
         if hash gcc-11 2>/dev/null && version_gt 11.4 `gcc-11 -dumpversion`; then
-            export CC=${CC:-"gcc-11"}
-            export CXX=${CXX:-"g++-11"}
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which gcc-11`}
         elif hash gcc-10 2>/dev/null && version_gt 10.3 `gcc-10 -dumpversion`; then
-            export CC=${CC:-"gcc-10"}
-            export CXX=${CXX:-"g++-10"}
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which gcc-10`}
         elif hash gcc-9 2>/dev/null && version_gt 9.4 `gcc-9 -dumpversion`; then
-            export CC=${CC:-"gcc-9"}
-            export CXX=${CXX:-"g++-9"}
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which gcc-9`}
         elif hash gcc-8 2>/dev/null && version_gt 8.5 `gcc-8 -dumpversion`; then
-            export CC=${CC:-"gcc-8"}
-            export CXX=${CXX:-"g++-8"}
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which gcc-8`}
         else
-            export CC=${CC:-"gcc"}
-            export CXX=${CXX:-"g++"}
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which gcc`}
         fi
     fi
-    export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which $CC`}
-    export HOST_C_COMPILER=${HOST_C_COMPILER:-`which $CC`}
-    export HOST_CXX_COMPILER=${HOST_CXX_COMPILER:-`which $CXX`}
+
     export CLANG_CUDA_COMPILER_PATH=${CLANG_CUDA_COMPILER_PATH:-"/usr/bin/clang"}
     export TF_CUDA_CLANG=${TF_CUDA_CLANG:-0}
 else
