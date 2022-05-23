@@ -15,6 +15,7 @@ done
 # install requirements
 pacman -Syu --noconfirm --needed \
   base-devel \
+  gcc11 \
   cmake \
   git \
   python \

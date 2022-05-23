@@ -64,25 +64,17 @@ if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
     export TF_CUDNN_VERSION="$(find /opt /usr -name 'libcudnn.so.*' -path '*/cuda*' | tail -n1 | sed -r 's/^.*\.so\.//')"
 
     # choose the right version of CUDA compiler
-    if [ -z "$GCC_HOST_COMPILER_PATH" ]; then
-        if hash gcc-11 2>/dev/null && version_gt 11.1 `gcc-11 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-11"}
+    if [ -z "${GCC_HOST_COMPILER_PATH}" ]; then
+        if hash gcc-11 2>/dev/null && version_gt 11.4 `gcc-11 -dumpversion`; then
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which gcc-11`}
         elif hash gcc-10 2>/dev/null && version_gt 10.3 `gcc-10 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-10"}
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which gcc-10`}
         elif hash gcc-9 2>/dev/null && version_gt 9.4 `gcc-9 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-9"}
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which gcc-9`}
         elif hash gcc-8 2>/dev/null && version_gt 8.5 `gcc-8 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-8"}
-        elif hash gcc-7 2>/dev/null && version_gt 7.5 `gcc-7 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-7"}
-        elif hash gcc-6 2>/dev/null && version_gt 6.4 `gcc-6 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-6"}
-        elif hash gcc-5 2>/dev/null && version_gt 5.5 `gcc-5 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-5"}
-        elif hash gcc-4 2>/dev/null && version_gt 4.9 `gcc-4 -dumpversion`; then
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc-4"}
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which gcc-8`}
         else
-            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-"/usr/bin/gcc"}
+            export GCC_HOST_COMPILER_PATH=${GCC_HOST_COMPILER_PATH:-`which gcc`}
         fi
     fi
 

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
 cmake_policy(SET CMP0048 NEW)  # Enable version parameter in project().
 file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/PROJECT_VERSION" version)
 project(
@@ -11,6 +11,7 @@ option(REQUIRE_CUDA "Make sure to find and use CUDA (implies ALLOW_CUDA)." OFF)
 set(LOCAL_RAM_RESOURCES 4096 CACHE STRING "The amount of local RAM resources passed to bazel scheduler (e.g., 4096).")
 set(LOCAL_CPU_RESOURCES HOST_CPUS CACHE STRING "The amount of local CPU cores passed to bazel scheduler (e.g., 2).")
 set(TENSORFLOW_TAG "v${version}" CACHE STRING "The tensorflow release tag to be checked out (default v${version}).")
+option(INSTALL_PROTOBUF "Install protobuf compatible with tensorflow version." OFF)
 set(CMAKE_CXX_STANDARD 14 CACHE STRING "The C++ standard for building and linking the library (e.g., 14).")
 
 # -------------
@@ -31,6 +32,9 @@ configure_file("cmake/build_tensorflow.sh.in" "build_tensorflow.sh" @ONLY)
 # ----------------------------------------------
 
 include(TensorflowBase)
+if(INSTALL_PROTOBUF)
+  include(ProtobufExternal)
+endif()
 
 # ------------------------------
 # Define Tensorflow_CC Interface
@@ -38,6 +42,10 @@ include(TensorflowBase)
 
 add_library(tensorflow_cc INTERFACE)
 target_compile_features(tensorflow_cc INTERFACE "cxx_std_${CMAKE_CXX_STANDARD}")
+
+if(INSTALL_PROTOBUF)
+    add_dependencies(tensorflow_cc protobuf-external)
+endif()
 
 # The include folders are sometimes contained under bazel-bin/bin/ and sometimes just bazel-bin.
 target_include_directories(
