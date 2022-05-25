@@ -58,8 +58,8 @@ if [ "$cuda_allowed" == true ] && [ "$cuda_available" == true ]; then
     # according to the above, we should be specifying CUDA compute capabilities as 'sm_XX' or 'compute_XX' from now on
     # add latest PTX for future compatibility
     export TF_CUDA_COMPUTE_CAPABILITIES=${TF_CUDA_COMPUTE_CAPABILITIES:-"sm_52,sm_53,sm_60,sm_61,sm_62,sm_70,sm_72,sm_75,sm_80,sm_86,compute_86"}
-    export TF_CUDA_PATHS=${TF_CUDA_PATHS:-"/opt/cuda-${TF_CUDA_VERSION},/opt/cuda,/usr/local/cuda-${TF_CUDA_VERSION},/usr/local/cuda,/usr/local,/usr/cuda-${TF_CUDA_VERSION},/usr/cuda,/usr"}
     export TF_CUDA_VERSION="$(nvcc --version | sed -n 's/^.*release \(.*\),.*/\1/p')"
+    export TF_CUDA_PATHS=${TF_CUDA_PATHS:-"/opt/cuda-${TF_CUDA_VERSION},/opt/cuda,/usr/local/cuda-${TF_CUDA_VERSION},/usr/local/cuda,/usr/local,/usr/cuda-${TF_CUDA_VERSION},/usr/cuda,/usr"}
     export TF_NCCL_VERSION="$(find /opt /usr -name 'libnccl.so.*' -path '*/cuda*' | tail -n1 | sed -r 's/^.*\.so\.//')"
     export TF_CUDNN_VERSION="$(find /opt /usr -name 'libcudnn.so.*' -path '*/cuda*' | tail -n1 | sed -r 's/^.*\.so\.//')"
 
